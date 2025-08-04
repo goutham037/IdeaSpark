@@ -1,0 +1,137 @@
+
+**Project Title:** Startup Idea Validator
+
+
+
+**Objective:** Create a full-stack web application that allows users to evaluate their startup ideas. The application should collect detailed information, calculate a viability score, and provide actionable feedback.
+
+
+
+**Technology Stack:**
+
+- **Frontend:** React.js
+
+- **Backend:** Node.js with Express.js
+
+- **Database:** MongoDB with Mongoose for schema management
+
+- **Authentication:** JSON Web Tokens (JWT)
+
+- **Styling:** Tailwind CSS for a modern, clean UI
+
+
+
+---
+
+
+
+**Backend Specification:**
+
+
+
+1.  **Project Structure:** Create a `server` directory for the backend with the following subdirectories: `controllers`, `routes`, `models`, and `middleware`.
+
+2.  **API Endpoints:**
+
+    -   **Authentication:**
+
+        -   `POST /api/auth/register`: Register a new user.
+
+        -   `POST /api/auth/login`: Log in a user and return a JWT.
+
+        -   `GET /api/auth/me`: Get the current user's profile (protected route).
+
+    -   **Startup Ideas:**
+
+        -   `POST /api/ideas`: Create a new startup idea (protected route).
+
+        -   `GET /api/ideas`: Get all of a user's ideas (protected route).
+
+        -   `GET /api/ideas/:id`: Get a single idea by its ID (protected route).
+
+        -   `PUT /api/ideas/:id`: Update a specific idea (protected route).
+
+        -   `DELETE /api/ideas/:id`: Delete an idea (protected route).
+
+3.  **Database Models:**
+
+    -   **User Model:**
+
+        -   `username` (string, required, unique)
+
+        -   `email` (string, required, unique)
+
+        -   `password` (string, required)
+
+    -   **Idea Model:**
+
+        -   `user`: A reference to the User model.
+
+        -   `problem`: (string, required)
+
+        -   `solution`: (string, required)
+
+        -   `targetMarket`: (string, required)
+
+        -   `team`: (string, required)
+
+        -   `businessModel`: (string, required)
+
+        -   `competition`: (string, required)
+
+        -   `viabilityScore`: (number)
+
+        -   `feedback`: (string)
+
+4.  **Scoring Logic:** When a new idea is submitted, implement a basic scoring algorithm. The algorithm should:
+
+    -   Assign points based on keywords and length of the inputs for `solution`, `targetMarket`, and `competition`.
+
+    -   Calculate a total `viabilityScore` (e.g., from 1-100).
+
+    -   Based on the score, generate a simple text `feedback` string (e.g., "Low viability. Suggestion: Research your target market more.")
+
+5.  **Environment Variables:** Use a `.env` file to store sensitive data like the MongoDB connection string and the JWT secret.
+
+
+
+---
+
+
+
+**Frontend Specification:**
+
+
+
+1.  **Project Structure:** Create a `client` directory for the frontend with `components`, `pages`, and `assets` subdirectories.
+
+2.  **User Interface:**
+
+    -   **Home Page:** A landing page with a call to action to "Get Started" or "Log In".
+
+    -   **Login/Register Pages:** Simple forms for user authentication.
+
+    -   **Dashboard:** A protected route where a logged-in user can see a list of their submitted ideas. Each idea should be displayed with its title and viability score.
+
+    -   **Idea Submission Form:** A multi-step form to collect the structured data (problem, solution, etc.).
+
+    -   **Idea Details Page:** A protected route to display a single idea's full details, including the score and the generated feedback.
+
+3.  **State Management:** Use React's Context API or a simple state management library to handle user authentication state across the application.
+
+4.  **API Integration:** Use a library like `axios` to make requests to the backend API endpoints.
+
+
+
+---
+
+
+
+**Next Steps (after initial setup):**
+
+-   After creating the initial boilerplate, ask the AI to implement the User authentication logic first.
+
+-   Then, ask for the Mongoose schema for the Idea model.
+
+-   Continue this process feature by feature to build out the application iteratively.
+

@@ -107,7 +107,7 @@ export class DatabaseStorage implements IStorage {
     const result = await db
       .delete(ideas)
       .where(and(eq(ideas.id, ideaId), eq(ideas.userId, userId)));
-    return result.rowCount > 0;
+    return (result.rowCount || 0) > 0;
   }
 
   private calculateViabilityScore(idea: Partial<Idea>): { viabilityScore: number; feedback: string } {

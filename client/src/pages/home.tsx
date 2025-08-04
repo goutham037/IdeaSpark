@@ -24,6 +24,8 @@ import {
 } from "lucide-react";
 import IdeaCard from "@/components/ui/idea-card";
 import Navigation from "@/components/ui/navigation";
+import FloatingActionButton from "@/components/ui/floating-action-button";
+import LoadingSpinner, { SkeletonCard } from "@/components/ui/loading-spinner";
 import type { Idea } from "@shared/schema";
 
 export default function Home() {
@@ -33,7 +35,7 @@ export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCategory, setFilterCategory] = useState("all");
 
-  const { data: ideas = [], isLoading } = useQuery({
+  const { data: ideas = [], isLoading } = useQuery<Idea[]>({
     queryKey: ["/api/ideas"],
     retry: false,
   });
@@ -77,10 +79,11 @@ export default function Home() {
     const matchesSearch = idea.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          idea.problem.toLowerCase().includes(searchTerm.toLowerCase());
     
+    const score = idea.viabilityScore || 0;
     const matchesFilter = filterCategory === "all" || 
-                         (filterCategory === "high" && idea.viabilityScore >= 80) ||
-                         (filterCategory === "medium" && idea.viabilityScore >= 60 && idea.viabilityScore < 80) ||
-                         (filterCategory === "low" && idea.viabilityScore < 60) ||
+                         (filterCategory === "high" && score >= 80) ||
+                         (filterCategory === "medium" && score >= 60 && score < 80) ||
+                         (filterCategory === "low" && score < 60) ||
                          (filterCategory === "draft" && idea.status === "draft");
     
     return matchesSearch && matchesFilter;
@@ -89,21 +92,33 @@ export default function Home() {
   const stats = {
     total: ideas.length,
     avgScore: ideas.length > 0 ? Math.round(ideas.reduce((sum: number, idea: Idea) => sum + (idea.viabilityScore || 0), 0) / ideas.length) : 0,
-    highPotential: ideas.filter((idea: Idea) => idea.viabilityScore >= 80).length,
+    highPotential: ideas.filter((idea: Idea) => (idea.viabilityScore || 0) >= 80).length,
     inProgress: ideas.filter((idea: Idea) => idea.status === "draft").length,
   };
 
   if (authLoading || isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-indigo-600"></div>
+      <div className="min-h-screen bg-gray-50">
+        <div className="bg-white border-b border-gray-200 px-4 py-6">
+          <div className="max-w-7xl mx-auto">
+            <div className="h-6 bg-gray-200 rounded w-1/3 mb-2 animate-pulse"></div>
+            <div className="h-4 bg-gray-200 rounded w-1/2 animate-pulse"></div>
+          </div>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <SkeletonCard key={i} />
+            ))}
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navigation user={user} onLogout={handleLogout} />
+      <Navigation user={user as any} onLogout={handleLogout} />
 
       {/* Dashboard Header */}
       <motion.div 
@@ -114,7 +129,7 @@ export default function Home() {
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Your Ideas Dashboard</h1>
+            <h1 className="text-2xl font-bold gradient-text">Your Ideas Dashboard</h1>
             <p className="text-gray-600 mt-1">Track, analyze, and improve your startup concepts</p>
           </div>
           <Link href="/ideas/new">
@@ -305,6 +320,8 @@ export default function Home() {
           )}
         </AnimatePresence>
       </div>
+      
+      <FloatingActionButton onNewIdea={() => window.location.href = '/ideas/new'} />
     </div>
   );
 }

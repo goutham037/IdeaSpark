@@ -66,7 +66,7 @@ export default function IdeaCard({ idea, onDelete, isDeleting }: IdeaCardProps) 
       onHoverEnd={() => setIsHovered(false)}
     >
       <Link href={`/ideas/${idea.id}`}>
-        <Card className="cursor-pointer overflow-hidden hover:shadow-lg transition-all duration-300 group">
+        <Card className="cursor-pointer overflow-hidden card-hover-effect group">
           <CardContent className="p-6">
             <div className="flex items-start justify-between mb-4">
               <div className="flex-1">
@@ -89,7 +89,7 @@ export default function IdeaCard({ idea, onDelete, isDeleting }: IdeaCardProps) 
               </div>
               <div className="flex items-center text-sm text-gray-600">
                 <Calendar className="w-4 h-4 text-violet-500 mr-2" />
-                <span>Created {formatDate(idea.createdAt!)}</span>
+                <span>Created {formatDate(idea.createdAt?.toString() || new Date().toString())}</span>
               </div>
             </div>
 
@@ -106,19 +106,21 @@ export default function IdeaCard({ idea, onDelete, isDeleting }: IdeaCardProps) 
               <div className="flex items-center space-x-1">
                 <motion.button
                   onClick={toggleBookmark}
-                  className={`p-1 rounded transition-colors duration-300 ${
+                  className={`p-1 rounded-full transition-all duration-300 hover:bg-red-50 ${
                     isBookmarked ? "text-red-500" : "text-gray-400 hover:text-red-500"
                   }`}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.2 }}
+                  whileTap={{ scale: 0.8 }}
                 >
-                  <Heart className={`w-4 h-4 ${isBookmarked ? "fill-current" : ""}`} />
+                  <Heart className={`w-4 h-4 transition-all duration-300 ${isBookmarked ? "fill-current" : ""}`} />
                 </motion.button>
                 
                 <motion.button
                   onClick={handleDelete}
                   disabled={isDeleting}
-                  className="p-1 rounded text-gray-400 hover:text-red-500 transition-colors duration-300 disabled:opacity-50"
-                  whileTap={{ scale: 0.95 }}
+                  className="p-1 rounded-full text-gray-400 hover:text-red-500 hover:bg-red-50 transition-all duration-300 disabled:opacity-50"
+                  whileHover={{ scale: 1.2 }}
+                  whileTap={{ scale: 0.8 }}
                   animate={isDeleting ? { rotate: 360 } : {}}
                   transition={{ duration: 1, repeat: isDeleting ? Infinity : 0 }}
                 >

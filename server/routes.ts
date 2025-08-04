@@ -28,7 +28,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const idea = await storage.createIdea(userId, ideaData);
       res.status(201).json(idea);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error creating idea:", error);
       if (error.name === "ZodError") {
         res.status(400).json({ message: "Invalid idea data", errors: error.errors });
@@ -78,7 +78,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       res.json(idea);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error updating idea:", error);
       if (error.name === "ZodError") {
         res.status(400).json({ message: "Invalid update data", errors: error.errors });

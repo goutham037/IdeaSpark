@@ -9,6 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight, Check, Save } from "lucide-react";
+import LoadingSpinner from "@/components/ui/loading-spinner";
 import type { InsertIdea } from "@shared/schema";
 
 interface MultiStepFormProps {
@@ -113,7 +114,7 @@ export default function MultiStepForm({
                   id="title"
                   placeholder="Give your idea a catchy name..."
                   {...form.register("title")}
-                  className="transition-all duration-300 focus:scale-105"
+                  className="transition-all duration-300 focus:scale-105 hover:shadow-md focus:shadow-lg border-2 focus:border-indigo-400"
                 />
                 {form.formState.errors.title && (
                   <p className="text-red-500 text-sm mt-1">{form.formState.errors.title.message}</p>
@@ -127,7 +128,7 @@ export default function MultiStepForm({
                 <Textarea
                   id="problem"
                   placeholder="Describe the specific problem you're addressing..."
-                  className="h-32 resize-none transition-all duration-300 focus:scale-105"
+                  className="h-32 resize-none transition-all duration-300 focus:scale-105 hover:shadow-md focus:shadow-lg border-2 focus:border-indigo-400"
                   {...form.register("problem", {
                     onChange: (e) => updateCharCount("problem", e.target.value, 500)
                   })}
@@ -159,7 +160,7 @@ export default function MultiStepForm({
                 <Textarea
                   id="solution"
                   placeholder="Explain your proposed solution in detail..."
-                  className="h-32 resize-none transition-all duration-300 focus:scale-105"
+                  className="h-32 resize-none transition-all duration-300 focus:scale-105 hover:shadow-md focus:shadow-lg border-2 focus:border-indigo-400"
                   {...form.register("solution", {
                     onChange: (e) => updateCharCount("solution", e.target.value, 500)
                   })}
@@ -191,7 +192,7 @@ export default function MultiStepForm({
                 <Textarea
                   id="targetMarket"
                   placeholder="Describe your ideal customers, their demographics, and characteristics..."
-                  className="h-24 resize-none transition-all duration-300 focus:scale-105"
+                  className="h-24 resize-none transition-all duration-300 focus:scale-105 hover:shadow-md focus:shadow-lg border-2 focus:border-indigo-400"
                   {...form.register("targetMarket", {
                     onChange: (e) => updateCharCount("targetMarket", e.target.value, 300)
                   })}
@@ -218,7 +219,7 @@ export default function MultiStepForm({
                 <Textarea
                   id="businessModel"
                   placeholder="Explain your revenue strategy, cost structure, and how you'll scale..."
-                  className="h-24 resize-none transition-all duration-300 focus:scale-105"
+                  className="h-24 resize-none transition-all duration-300 focus:scale-105 hover:shadow-md focus:shadow-lg border-2 focus:border-indigo-400"
                   {...form.register("businessModel", {
                     onChange: (e) => updateCharCount("businessModel", e.target.value, 300)
                   })}
@@ -245,7 +246,7 @@ export default function MultiStepForm({
                 <Textarea
                   id="competition"
                   placeholder="Who are your main competitors? What makes you different or better?"
-                  className="h-24 resize-none transition-all duration-300 focus:scale-105"
+                  className="h-24 resize-none transition-all duration-300 focus:scale-105 hover:shadow-md focus:shadow-lg border-2 focus:border-indigo-400"
                   {...form.register("competition", {
                     onChange: (e) => updateCharCount("competition", e.target.value, 400)
                   })}
@@ -267,7 +268,7 @@ export default function MultiStepForm({
                 <Textarea
                   id="team"
                   placeholder="Describe your team, relevant experience, and key skills..."
-                  className="h-24 resize-none transition-all duration-300 focus:scale-105"
+                  className="h-24 resize-none transition-all duration-300 focus:scale-105 hover:shadow-md focus:shadow-lg border-2 focus:border-indigo-400"
                   {...form.register("team", {
                     onChange: (e) => updateCharCount("team", e.target.value, 300)
                   })}
@@ -319,10 +320,19 @@ export default function MultiStepForm({
             <Button
               onClick={handleSubmit}
               disabled={isSubmitting}
-              className="bg-gradient-to-r from-emerald-500 to-cyan-500 hover:shadow-lg transform hover:scale-105 transition-all duration-300"
+              className="bg-gradient-to-r from-emerald-500 to-cyan-500 hover:shadow-lg transform hover:scale-105 transition-all duration-300 disabled:opacity-75 disabled:cursor-not-allowed disabled:transform-none"
             >
-              <Check className="mr-2 w-4 h-4" />
-              {isSubmitting ? "Analyzing..." : "Submit for Analysis"}
+              {isSubmitting ? (
+                <>
+                  <LoadingSpinner size="sm" color="text-white" />
+                  <span className="ml-2">Analyzing...</span>
+                </>
+              ) : (
+                <>
+                  <Check className="mr-2 w-4 h-4" />
+                  Submit for Analysis
+                </>
+              )}
             </Button>
           )}
         </div>

@@ -22,7 +22,8 @@ import {
   Globe,
   Lightbulb,
   Target,
-  TrendingUp
+  TrendingUp,
+  X
 } from "lucide-react";
 import ScoreCircle from "@/components/ui/score-circle";
 import type { Idea } from "@shared/schema";
@@ -38,7 +39,7 @@ export default function IdeaDetails() {
     }
   }, [match, params]);
 
-  const { data: idea, isLoading } = useQuery({
+  const { data: idea, isLoading } = useQuery<Idea>({
     queryKey: ["/api/ideas", params?.id],
     enabled: !!params?.id,
     retry: false,
@@ -143,9 +144,9 @@ export default function IdeaDetails() {
     };
 
     if (feedback) {
-      const strengthsMatch = feedback.match(/Strengths:\n(.*?)\n\n/s);
-      const improvementsMatch = feedback.match(/Areas for Improvement:\n(.*?)\n\n/s);
-      const nextStepsMatch = feedback.match(/Recommended Next Steps:\n(.*?)$/s);
+      const strengthsMatch = feedback.match(/Strengths:\n(.*?)\n\n/);
+      const improvementsMatch = feedback.match(/Areas for Improvement:\n(.*?)\n\n/);
+      const nextStepsMatch = feedback.match(/Recommended Next Steps:\n(.*?)$/);
 
       if (strengthsMatch) {
         sections.strengths = strengthsMatch[1].split('\n').filter(line => line.trim().startsWith('•')).map(line => line.trim().substring(1).trim());

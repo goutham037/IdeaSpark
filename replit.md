@@ -1,64 +1,65 @@
-# Startup Idea Validator
+# Drishti - Startup Idea Validator
 
-## Overview
+## Project Overview
 
-Drishti is a full-stack web application that allows entrepreneurs to evaluate their startup ideas through a comprehensive assessment system. The platform collects detailed information about problems, solutions, target markets, business models, and competitive landscapes to calculate viability scores and provide actionable feedback. Users can create, manage, and analyze multiple startup ideas through an intuitive interface that guides them through a structured evaluation process.
+Drishti is a highly interactive startup idea validator with animated UI, real-time feedback, and engaging user experience. The application helps entrepreneurs validate their startup ideas through AI-powered insights, comprehensive market analysis, and actionable feedback.
+
+## Recent Changes
+
+### Authentication System Migration (January 9, 2025)
+- **Removed Replit Auth**: Completely replaced Replit's OAuth system with simple username/password authentication
+- **MongoDB Integration**: Migrated from PostgreSQL to MongoDB using the provided connection string
+- **New Auth Flow**: 
+  - `/auth` page with dual login/registration forms
+  - Session-based authentication using express-session
+  - Password hashing with bcryptjs
+  - User management with username, email, firstName, lastName fields
+
+### Technical Stack Changes
+- **Database**: MongoDB (mongodb+srv://aax:3744@cluster0.e7l0g.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0)
+- **Authentication**: Express sessions + bcryptjs password hashing
+- **Frontend Auth**: React Hook Form + Zod validation
+- **UI**: Animated auth page with gradient design matching app theme
+
+## Project Architecture
+
+### Backend Structure
+- `server/auth.ts` - Authentication middleware and routes
+- `server/storage.ts` - MongoDB operations for users and ideas  
+- `server/routes.ts` - API routes with auth protection
+- `server/db.ts` - MongoDB connection setup
+
+### Frontend Structure
+- `client/src/pages/auth.tsx` - Login/registration page
+- `client/src/hooks/useAuth.ts` - Authentication state management
+- `client/src/App.tsx` - Route protection and navigation logic
+
+### Authentication Flow
+1. User visits `/auth` for login/registration
+2. Forms validated with Zod schemas
+3. Server creates session on successful auth
+4. Frontend redirects to dashboard on success
+5. Protected routes require active session
+
+### Data Models
+- **User**: id, username, password (hashed), email, firstName, lastName, timestamps
+- **Idea**: id, userId, title, problem, solution, targetMarket, team, businessModel, competition, viabilityScore, feedback, status, isBookmarked, timestamps
 
 ## User Preferences
+- Simple authentication preferred over complex OAuth
+- MongoDB over PostgreSQL for this project
+- Focus on core functionality without heavy dependencies
+- Clean, gradient-based UI design
 
-Preferred communication style: Simple, everyday language.
+## Known Issues
+- None currently identified
 
-## System Architecture
+## Deployment Notes
+- MongoDB connection string is hardcoded (should be moved to environment variables for production)
+- Session secret should be properly configured for production
+- All authentication endpoints are working and tested
 
-### Frontend Architecture
-- **React with TypeScript**: Single-page application built with React 18 and TypeScript for type safety
-- **Routing**: Client-side routing using Wouter for lightweight navigation
-- **State Management**: TanStack React Query for server state management and caching
-- **UI Framework**: Radix UI components with shadcn/ui design system for consistent, accessible interface
-- **Styling**: Tailwind CSS with CSS variables for theming and responsive design
-- **Animations**: Framer Motion for smooth transitions and interactive animations
-- **Form Handling**: React Hook Form with Zod validation for type-safe form management
-
-### Backend Architecture
-- **Node.js with Express**: RESTful API server using Express.js framework
-- **Database**: PostgreSQL with Drizzle ORM for type-safe database operations
-- **Authentication**: Replit authentication system with session-based auth using passport strategies
-- **Session Storage**: PostgreSQL-backed session store using connect-pg-simple
-- **API Structure**: RESTful endpoints for CRUD operations on ideas and user management
-- **Validation**: Zod schemas shared between frontend and backend for consistent validation
-
-### Data Architecture
-- **Database Schema**: PostgreSQL with tables for users, startup ideas, and sessions
-- **ORM**: Drizzle ORM with TypeScript integration for database operations
-- **Schema Validation**: Drizzle-zod integration for runtime validation
-- **Migrations**: Database migrations managed through Drizzle Kit
-
-### Development Architecture
-- **Build System**: Vite for fast development and optimized production builds
-- **Module System**: ES modules throughout the application
-- **Path Aliases**: TypeScript path mapping for clean imports
-- **Development Server**: Hot module replacement with Vite middleware integration
-
-## External Dependencies
-
-### Database & ORM
-- **PostgreSQL**: Primary database hosted on Neon serverless platform
-- **Drizzle ORM**: Type-safe database toolkit with PostgreSQL adapter
-- **@neondatabase/serverless**: Serverless PostgreSQL driver for Neon
-
-### Authentication
-- **Replit Auth**: OAuth-based authentication system integrated with Replit platform
-- **Passport.js**: Authentication middleware with OpenID Connect strategy
-- **express-session**: Session management with PostgreSQL store
-
-### UI & Styling
-- **Radix UI**: Headless UI component library for accessibility
-- **Tailwind CSS**: Utility-first CSS framework
-- **Lucide React**: Icon library for consistent iconography
-- **Framer Motion**: Animation library for smooth interactions
-
-### Development Tools
-- **TypeScript**: Static type checking and enhanced developer experience
-- **Vite**: Fast build tool with development server
-- **ESBuild**: Fast JavaScript bundler for production builds
-- **PostCSS**: CSS processing with Tailwind and Autoprefixer
+## Next Steps
+- Test the complete authentication flow
+- Verify idea validation functionality works with new auth
+- Ensure all UI transitions work smoothly

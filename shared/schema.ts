@@ -1,79 +1,67 @@
-import { sql } from "drizzle-orm";
-import {
-  index,
-  jsonb,
-  pgTable,
-  text,
-  varchar,
-  integer,
-  timestamp,
-  boolean,
-} from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-// Session storage table (required for Replit Auth)
-export const sessions = pgTable(
-  "sessions",
-  {
-    sid: varchar("sid").primaryKey(),
-    sess: jsonb("sess").notNull(),
-    expire: timestamp("expire").notNull(),
-  },
-  (table) => [index("IDX_session_expire").on(table.expire)],
-);
+// User types for MongoDB
+export interface User {
+  _id?: string;
+  id: string;
+  username: string;
+  password: string;
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
-// User storage table (required for Replit Auth)
-export const users = pgTable("users", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  email: varchar("email").unique(),
-  firstName: varchar("first_name"),
-  lastName: varchar("last_name"),
-  profileImageUrl: varchar("profile_image_url"),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
+export const insertUserSchema = z.object({
+  username: z.string().min(3, "Username must be at least 3 characters"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+  email: z.string().email().optional(),
+  firstName: z.string().optional(),
+  lastName: z.string().optional(),
 });
 
-// Startup ideas table
-export const ideas = pgTable("ideas", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  userId: varchar("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
-  title: varchar("title").notNull(),
-  problem: text("problem").notNull(),
-  solution: text("solution").notNull(),
-  targetMarket: text("target_market").notNull(),
-  team: text("team").notNull(),
-  businessModel: text("business_model").notNull(),
-  competition: text("competition").notNull(),
-  viabilityScore: integer("viability_score"),
-  feedback: text("feedback"),
-  status: varchar("status", { enum: ["draft", "completed", "archived"] }).default("draft"),
-  isBookmarked: boolean("is_bookmarked").default(false),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
+export const loginSchema = z.object({
+  username: z.string().min(1, "Username is required"),
+  password: z.string().min(1, "Password is required"),
 });
+
+// Startup ideas for MongoDB
+export interface Idea {
+  _id?: string;
+  id: string;
+  userId: string;
+  title: string;
+  problem: string;
+  solution: string;
+  targetMarket: string;
+  team: string;
+  businessModel: string;
+  competition: string;
+  viabilityScore?: number;
+  feedback?: string;
+  status: "draft" | "completed" | "archived";
+  isBookmarked: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 // Export schemas for validation
-export const insertIdeaSchema = createInsertSchema(ideas).omit({
-  id: true,
-  userId: true,
-  viabilityScore: true,
-  feedback: true,
-  createdAt: true,
-  updatedAt: true,
-}).extend({
+export const insertIdeaSchema = z.object({
+  title: z.string().min(1, "Title is required"),
   problem: z.string().min(10, "Problem description must be at least 10 characters"),
   solution: z.string().min(10, "Solution description must be at least 10 characters"),
   targetMarket: z.string().min(5, "Target market must be at least 5 characters"),
   team: z.string().min(5, "Team description must be at least 5 characters"),
   businessModel: z.string().min(10, "Business model must be at least 10 characters"),
   competition: z.string().min(10, "Competition analysis must be at least 10 characters"),
+  status: z.enum(["draft", "completed", "archived"]).default("draft"),
+  isBookmarked: z.boolean().default(false),
 });
 
 export const updateIdeaSchema = insertIdeaSchema.partial();
 
-export type UpsertUser = typeof users.$inferInsert;
-export type User = typeof users.$inferSelect;
+export type InsertUser = z.infer<typeof insertUserSchema>;
+export type LoginData = z.infer<typeof loginSchema>;
 export type InsertIdea = z.infer<typeof insertIdeaSchema>;
 export type UpdateIdea = z.infer<typeof updateIdeaSchema>;
-export type Idea = typeof ideas.$inferSelect;

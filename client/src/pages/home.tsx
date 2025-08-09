@@ -29,7 +29,7 @@ import LoadingSpinner, { SkeletonCard } from "@/components/ui/loading-spinner";
 import type { Idea } from "@shared/schema";
 
 export default function Home() {
-  const { user, isLoading: authLoading } = useAuth();
+  const { user, isLoading: authLoading, logout } = useAuth();
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [searchTerm, setSearchTerm] = useState("");
@@ -59,7 +59,7 @@ export default function Home() {
           variant: "destructive",
         });
         setTimeout(() => {
-          window.location.href = "/api/login";
+          logout();
         }, 500);
         return;
       }
@@ -72,7 +72,7 @@ export default function Home() {
   });
 
   const handleLogout = () => {
-    window.location.href = "/api/logout";
+    logout();
   };
 
   const filteredIdeas = ideas.filter((idea: Idea) => {

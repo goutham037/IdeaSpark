@@ -4,12 +4,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 import { Lightbulb, Rocket, Play, Users, BarChart3, Clock, Star, ArrowRight } from "lucide-react";
+import { useLocation } from "wouter";
 
 export default function Landing() {
+  const [, setLocation] = useLocation();
   const [isHovered, setIsHovered] = useState<string | null>(null);
 
   const handleGetStarted = () => {
-    window.location.href = "/api/login";
+    setLocation("/auth");
   };
 
   const handleDemo = () => {

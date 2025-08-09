@@ -1,36 +1,28 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { setupAuth, isAuthenticated } from "./replitAuth";
+import { setupAuth, authRoutes, requireAuth } from "./auth";
 import { insertIdeaSchema, updateIdeaSchema } from "@shared/schema";
+import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Auth middleware
-  await setupAuth(app);
-
-  // Auth routes
-  app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
-    try {
-      const userId = req.user.claims.sub;
-      const user = await storage.getUser(userId);
-      res.json(user);
-    } catch (error) {
-      console.error("Error fetching user:", error);
-      res.status(500).json({ message: "Failed to fetch user" });
-    }
-  });
+  // Setup auth middleware
+  setupAuth(app);
+  
+  // Register auth routes
+  authRoutes(app);
 
   // Ideas routes
-  app.post("/api/ideas", isAuthenticated, async (req: any, res) => {
+  app.post("/api/ideas", requireAuth, async (req, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user!.id;
       const ideaData = insertIdeaSchema.parse(req.body);
       
       const idea = await storage.createIdea(userId, ideaData);
       res.status(201).json(idea);
     } catch (error: any) {
       console.error("Error creating idea:", error);
-      if (error.name === "ZodError") {
+      if (error instanceof z.ZodError) {
         res.status(400).json({ message: "Invalid idea data", errors: error.errors });
       } else {
         res.status(500).json({ message: "Failed to create idea" });
@@ -38,9 +30,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/ideas", isAuthenticated, async (req: any, res) => {
+  app.get("/api/ideas", requireAuth, async (req, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user!.id;
       const ideas = await storage.getIdeas(userId);
       res.json(ideas);
     } catch (error) {
@@ -49,9 +41,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/ideas/:id", isAuthenticated, async (req: any, res) => {
+  app.get("/api/ideas/:id", requireAuth, async (req, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user!.id;
       const ideaId = req.params.id;
       
       const idea = await storage.getIdea(userId, ideaId);
@@ -66,9 +58,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.put("/api/ideas/:id", isAuthenticated, async (req: any, res) => {
+  app.put("/api/ideas/:id", requireAuth, async (req, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user!.id;
       const ideaId = req.params.id;
       const updates = updateIdeaSchema.parse(req.body);
       
@@ -80,7 +72,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(idea);
     } catch (error: any) {
       console.error("Error updating idea:", error);
-      if (error.name === "ZodError") {
+      if (error instanceof z.ZodError) {
         res.status(400).json({ message: "Invalid update data", errors: error.errors });
       } else {
         res.status(500).json({ message: "Failed to update idea" });
@@ -88,9 +80,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete("/api/ideas/:id", isAuthenticated, async (req: any, res) => {
+  app.delete("/api/ideas/:id", requireAuth, async (req, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user!.id;
       const ideaId = req.params.id;
       
       const deleted = await storage.deleteIdea(userId, ideaId);

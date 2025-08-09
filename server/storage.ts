@@ -1,19 +1,19 @@
 import {
-  users,
-  ideas,
   type User,
-  type UpsertUser,
+  type InsertUser,
   type Idea,
   type InsertIdea,
   type UpdateIdea,
 } from "@shared/schema";
-import { db } from "./db";
-import { eq, desc, and } from "drizzle-orm";
+import { getDb } from "./db";
+import { v4 as uuidv4 } from 'uuid';
+import bcrypt from 'bcryptjs';
 
 export interface IStorage {
-  // User operations (required for Replit Auth)
-  getUser(id: string): Promise<User | undefined>;
-  upsertUser(user: UpsertUser): Promise<User>;
+  // User operations
+  createUser(user: InsertUser): Promise<User>;
+  getUserByUsername(username: string): Promise<User | null>;
+  getUserById(id: string): Promise<User | null>;
 
   // Idea operations
   createIdea(userId: string, idea: InsertIdea): Promise<Idea>;
@@ -24,62 +24,79 @@ export interface IStorage {
 }
 
 export class DatabaseStorage implements IStorage {
-  // User operations (required for Replit Auth)
-  async getUser(id: string): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.id, id));
-    return user;
+  // User operations
+  async createUser(userData: InsertUser): Promise<User> {
+    const db = await getDb();
+    const hashedPassword = await bcrypt.hash(userData.password, 12);
+    
+    const user = {
+      id: uuidv4(),
+      username: userData.username,
+      password: hashedPassword,
+      email: userData.email,
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    const result = await db.collection('users').insertOne(user);
+    return { ...user, _id: result.insertedId.toString() } as User;
   }
 
-  async upsertUser(userData: UpsertUser): Promise<User> {
-    const [user] = await db
-      .insert(users)
-      .values(userData)
-      .onConflictDoUpdate({
-        target: users.id,
-        set: {
-          ...userData,
-          updatedAt: new Date(),
-        },
-      })
-      .returning();
-    return user;
+  async getUserByUsername(username: string): Promise<User | null> {
+    const db = await getDb();
+    const user = await db.collection('users').findOne({ username });
+    return user as User | null;
+  }
+
+  async getUserById(id: string): Promise<User | null> {
+    const db = await getDb();
+    const user = await db.collection('users').findOne({ id });
+    return user as User | null;
   }
 
   // Idea operations
   async createIdea(userId: string, ideaData: InsertIdea): Promise<Idea> {
+    const db = await getDb();
+    
     // Calculate viability score and generate feedback
     const { viabilityScore, feedback } = this.calculateViabilityScore(ideaData);
     
-    const [idea] = await db
-      .insert(ideas)
-      .values({
-        ...ideaData,
-        userId,
-        viabilityScore,
-        feedback,
-        status: "completed",
-      })
-      .returning();
-    return idea;
+    const idea = {
+      id: uuidv4(),
+      userId,
+      ...ideaData,
+      viabilityScore,
+      feedback,
+      status: "completed" as const,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    const result = await db.collection('ideas').insertOne(idea);
+    return { ...idea, _id: result.insertedId.toString() } as Idea;
   }
 
   async getIdeas(userId: string): Promise<Idea[]> {
-    return await db
-      .select()
-      .from(ideas)
-      .where(eq(ideas.userId, userId))
-      .orderBy(desc(ideas.updatedAt));
+    const db = await getDb();
+    const ideas = await db.collection('ideas')
+      .find({ userId })
+      .sort({ updatedAt: -1 })
+      .toArray();
+    return ideas.map(idea => ({ ...idea, _id: idea._id?.toString() })) as Idea[];
   }
 
   async getIdea(userId: string, ideaId: string): Promise<Idea | undefined> {
-    const [idea] = await db
-      .select()
-      .from(ideas)
-      .where(and(eq(ideas.id, ideaId), eq(ideas.userId, userId)));
-    return idea;
+    const db = await getDb();
+    const idea = await db.collection('ideas').findOne({ id: ideaId, userId });
+    if (!idea) return undefined;
+    return { ...idea, _id: idea._id?.toString() } as Idea;
   }
 
   async updateIdea(userId: string, ideaId: string, updates: UpdateIdea): Promise<Idea | undefined> {
+    const db = await getDb();
+    
     // Recalculate score if content changed
     let scoreUpdates = {};
     if (updates.problem || updates.solution || updates.targetMarket || updates.businessModel || updates.competition || updates.team) {
@@ -91,23 +108,24 @@ export class DatabaseStorage implements IStorage {
       }
     }
 
-    const [idea] = await db
-      .update(ideas)
-      .set({
-        ...updates,
-        ...scoreUpdates,
-        updatedAt: new Date(),
-      })
-      .where(and(eq(ideas.id, ideaId), eq(ideas.userId, userId)))
-      .returning();
-    return idea;
+    const updateData = {
+      ...updates,
+      ...scoreUpdates,
+      updatedAt: new Date(),
+    };
+
+    await db.collection('ideas').updateOne(
+      { id: ideaId, userId },
+      { $set: updateData }
+    );
+
+    return await this.getIdea(userId, ideaId);
   }
 
   async deleteIdea(userId: string, ideaId: string): Promise<boolean> {
-    const result = await db
-      .delete(ideas)
-      .where(and(eq(ideas.id, ideaId), eq(ideas.userId, userId)));
-    return (result.rowCount || 0) > 0;
+    const db = await getDb();
+    const result = await db.collection('ideas').deleteOne({ id: ideaId, userId });
+    return result.deletedCount > 0;
   }
 
   private calculateViabilityScore(idea: Partial<Idea>): { viabilityScore: number; feedback: string } {

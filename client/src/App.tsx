@@ -1,4 +1,4 @@
-import { Switch, Route, useLocation } from "wouter";
+import { Switch, Route, Redirect } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -28,25 +28,19 @@ function Router() {
         <>
           <Route path="/" component={Landing} />
           <Route path="/auth" component={AuthPage} />
-          <Route component={() => <Navigate to="/" />} />
+          <Route component={() => <Redirect to="/" />} />
         </>
       ) : (
         <>
           <Route path="/" component={Home} />
           <Route path="/ideas/new" component={IdeaForm} />
           <Route path="/ideas/:id" component={IdeaDetails} />
-          <Route path="/auth" component={() => <Navigate to="/" />} />
+          <Route path="/auth" component={() => <Redirect to="/" />} />
           <Route component={NotFound} />
         </>
       )}
     </Switch>
   );
-}
-
-function Navigate({ to }: { to: string }) {
-  const [, setLocation] = useLocation();
-  setLocation(to);
-  return null;
 }
 
 function App() {

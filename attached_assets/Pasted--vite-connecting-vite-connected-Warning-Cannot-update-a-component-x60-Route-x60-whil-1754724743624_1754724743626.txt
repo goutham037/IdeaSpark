@@ -1,0 +1,25 @@
+[vite] connecting...
+[vite] connected.
+Warning: Cannot update a component (&#x60;Route&#x60;) while rendering a different component (&#x60;Navigate&#x60;). To locate the bad setState() call inside &#x60;Navigate&#x60;, follow the stack trace as described in https://reactjs.org/link/setstate-in-render
+    at Navigate (https://cc8ceae7-7d73-462c-9d00-8ccf340d0981-00-2e2kfnkaa2hos.sisko.repl.co/src/App.tsx?v=fGfq4uaFjgboJ4XrtJYHz:112:21)
+    at component
+    at Route (https://cc8ceae7-7d73-462c-9d00-8ccf340d0981-00-2e2kfnkaa2hos.sisko.repl.co/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=c361bbce:323:16)
+    at Switch (https://cc8ceae7-7d73-462c-9d00-8ccf340d0981-00-2e2kfnkaa2hos.sisko.repl.co/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=c361bbce:379:17)
+    at Router (https://cc8ceae7-7d73-462c-9d00-8ccf340d0981-00-2e2kfnkaa2hos.sisko.repl.co/src/App.tsx?v=fGfq4uaFjgboJ4XrtJYHz:32:42)
+    at Provider (https://cc8ceae7-7d73-462c-9d00-8ccf340d0981-00-2e2kfnkaa2hos.sisko.repl.co/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-BCLB22GG.js?v=c361bbce:22:15)
+    at TooltipProvider (https://cc8ceae7-7d73-462c-9d00-8ccf340d0981-00-2e2kfnkaa2hos.sisko.repl.co/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=c361bbce:56:5)
+    at QueryClientProvider (https://cc8ceae7-7d73-462c-9d00-8ccf340d0981-00-2e2kfnkaa2hos.sisko.repl.co/@fs/home/runner/workspace/node_modules/.vite/deps/@tanstack_react-query.js?v=c361bbce:2805:3)
+    at App
+at Navigate (https://cc8ceae7-7d73-462c-9d00-8ccf340d0981-00-2e2kfnkaa2hos.sisko.repl.co/src/App.tsx?v=fGfq4uaFjgboJ4XrtJYHz:112:21)
+at component
+at Route (https://cc8ceae7-7d73-462c-9d00-8ccf340d0981-00-2e2kfnkaa2hos.sisko.repl.co/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=c361bbce:323:16)
+at Switch (https://cc8ceae7-7d73-462c-9d00-8ccf340d0981-00-2e2kfnkaa2hos.sisko.repl.co/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=c361bbce:379:17)
+at Router (https://cc8ceae7-7d73-462c-9d00-8ccf340d0981-00-2e2kfnkaa2hos.sisko.repl.co/src/App.tsx?v=fGfq4uaFjgboJ4XrtJYHz:32:42)
+at Provider (https://cc8ceae7-7d73-462c-9d00-8ccf340d0981-00-2e2kfnkaa2hos.sisko.repl.co/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-BCLB22GG.js?v=c361bbce:22:15)
+at TooltipProvider (https://cc8ceae7-7d73-462c-9d00-8ccf340d0981-00-2e2kfnkaa2hos.sisko.repl.co/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=c361bbce:56:5)
+at QueryClientProvider (https://cc8ceae7-7d73-462c-9d00-8ccf340d0981-00-2e2kfnkaa2hos.sisko.repl.co/@fs/home/runner/workspace/node_modules/.vite/deps/@tanstack_react-query.js?v=c361bbce:2805:3)
+at App
+at t.value (https://cc8ceae7-7d73-462c-9d00-8ccf340d0981-00-2e2kfnkaa2hos.sisko.repl.co/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
+at new t (https://cc8ceae7-7d73-462c-9d00-8ccf340d0981-00-2e2kfnkaa2hos.sisko.repl.co/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630)
+at t.value (https://cc8ceae7-7d73-462c-9d00-8ccf340d0981-00-2e2kfnkaa2hos.sisko.repl.co/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766)
+at https://cc8ceae7-7d73-462c-9d00-8ccf340d0981-00-2e2kfnkaa2hos.sisko.repl.co/__replco/static/devtools/eruda/3.2.3/eruda.js:2:34400

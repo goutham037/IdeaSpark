@@ -1,0 +1,1359 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drishti - Startup Idea Validator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'bounce-slow': 'bounce 2s infinite',
+                        'pulse-slow': 'pulse 3s infinite',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                        'slide-down': 'slideDown 0.5s ease-out',
+                        'fade-in': 'fadeIn 0.6s ease-out',
+                        'scale-in': 'scaleIn 0.3s ease-out',
+                        'progress': 'progress 2s ease-in-out',
+                    },
+                    keyframes: {
+                        slideUp: {
+                            '0%': { transform: 'translateY(100%)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        slideDown: {
+                            '0%': { transform: 'translateY(-100%)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        scaleIn: {
+                            '0%': { transform: 'scale(0.9)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' }
+                        },
+                        progress: {
+                            '0%': { transform: 'translateX(-100%)' },
+                            '100%': { transform: 'translateX(0%)' }
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="font-inter bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">
+
+    <!-- @COMPONENT: NavigationBar [responsive header with logo and navigation] -->
+    <nav class="bg-white/80 backdrop-blur-lg border-b border-gray-200 sticky top-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo Section -->
+                <div class="flex items-center space-x-2 group cursor-pointer">
+                    <div class="w-8 h-8 bg-gradient-to-r from-indigo-500 to-violet-500 rounded-lg flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-lightbulb text-white text-sm"></i>
+                    </div>
+                    <span class="text-xl font-bold bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">Drishti</span>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#features" class="text-gray-600 hover:text-indigo-600 transition-colors duration-300 relative group">
+                        Features
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-indigo-600 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#pricing" class="text-gray-600 hover:text-indigo-600 transition-colors duration-300 relative group">
+                        Pricing
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-indigo-600 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#about" class="text-gray-600 hover:text-indigo-600 transition-colors duration-300 relative group">
+                        About
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-indigo-600 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                </div>
+
+                <!-- Auth Buttons -->
+                <div class="flex items-center space-x-3">
+                    <button onclick="showAuthModal('login')" class="text-gray-600 hover:text-indigo-600 font-medium transition-colors duration-300">
+                        Sign In
+                    </button>
+                    <button onclick="showAuthModal('register')" class="bg-gradient-to-r from-indigo-500 to-violet-500 text-white px-4 py-2 rounded-lg font-medium hover:shadow-lg transform hover:scale-105 transition-all duration-300">
+                        Get Started
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- @END_COMPONENT: NavigationBar -->
+
+    <!-- @COMPONENT: HeroSection [main landing section with CTA] -->
+    <section class="relative pt-20 pb-32 overflow-hidden">
+        <!-- Background Animation -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-r from-violet-400 to-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse-slow"></div>
+            <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse-slow" style="animation-delay: 1s;"></div>
+        </div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <!-- Badge -->
+                <div class="inline-flex items-center px-4 py-2 bg-white/60 backdrop-blur-sm border border-indigo-200 rounded-full text-sm font-medium text-indigo-600 mb-8 animate-fade-in">
+                    <span class="w-2 h-2 bg-indigo-500 rounded-full mr-2 animate-pulse"></span>
+                    AI-Powered Startup Validation
+                </div>
+
+                <!-- Main Heading -->
+                <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6 animate-fade-in" style="animation-delay: 0.2s;">
+                    Validate Your 
+                    <span class="bg-gradient-to-r from-indigo-600 via-violet-600 to-cyan-600 bg-clip-text text-transparent animate-pulse-slow">
+                        Startup Ideas
+                    </span>
+                    <br>Before You Build
+                </h1>
+
+                <!-- Subheading -->
+                <p class="text-xl text-gray-600 mb-10 max-w-3xl mx-auto animate-fade-in" style="animation-delay: 0.4s;">
+                    Get instant, AI-powered feedback on your startup concepts. Analyze market viability, identify risks, and discover opportunities with our intelligent validation platform.
+                </p>
+
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16 animate-fade-in" style="animation-delay: 0.6s;">
+                    <button onclick="showDashboard()" class="group bg-gradient-to-r from-indigo-500 to-violet-500 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center">
+                        <i class="fas fa-rocket mr-2 group-hover:animate-bounce"></i>
+                        Start Validating Now
+                        <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform duration-300"></i>
+                    </button>
+                    <button onclick="showDemo()" class="group bg-white text-indigo-600 border-2 border-indigo-200 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-indigo-50 hover:border-indigo-300 transition-all duration-300 flex items-center">
+                        <i class="fas fa-play mr-2"></i>
+                        Watch Demo
+                    </button>
+                </div>
+
+                <!-- Stats -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl mx-auto animate-fade-in" style="animation-delay: 0.8s;">
+                    <div class="text-center group">
+                        <div class="text-3xl font-bold text-indigo-600 mb-2 group-hover:scale-110 transition-transform duration-300">500+</div>
+                        <div class="text-gray-600">Ideas Validated</div>
+                    </div>
+                    <div class="text-center group">
+                        <div class="text-3xl font-bold text-violet-600 mb-2 group-hover:scale-110 transition-transform duration-300">95%</div>
+                        <div class="text-gray-600">Accuracy Rate</div>
+                    </div>
+                    <div class="text-center group">
+                        <div class="text-3xl font-bold text-cyan-600 mb-2 group-hover:scale-110 transition-transform duration-300">2 min</div>
+                        <div class="text-gray-600">Average Time</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: HeroSection -->
+
+    <!-- @COMPONENT: Dashboard [main application interface] -->
+    <div id="dashboard" class="hidden min-h-screen bg-gray-50">
+        <!-- Dashboard Header -->
+        <div class="bg-white border-b border-gray-200 px-4 py-6">
+            <div class="max-w-7xl mx-auto flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Your Ideas Dashboard</h1>
+                    <p class="text-gray-600 mt-1">Track, analyze, and improve your startup concepts</p>
+                </div>
+                <button onclick="showIdeaForm()" class="bg-gradient-to-r from-indigo-500 to-violet-500 text-white px-6 py-3 rounded-lg font-medium hover:shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center">
+                    <i class="fas fa-plus mr-2"></i>
+                    New Idea
+                </button>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 py-8">
+            <!-- Stats Overview -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Total Ideas</p>
+                            <p class="text-3xl font-bold text-gray-900 mt-2">12</p>
+                        </div>
+                        <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-lightbulb text-indigo-600"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="flex items-center">
+                            <span class="text-emerald-600 text-sm font-medium">+23%</span>
+                            <span class="text-gray-500 text-sm ml-2">vs last month</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Avg Score</p>
+                            <p class="text-3xl font-bold text-gray-900 mt-2">78</p>
+                        </div>
+                        <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-chart-line text-emerald-600"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-emerald-500 h-2 rounded-full w-3/4 transition-all duration-1000"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">High Potential</p>
+                            <p class="text-3xl font-bold text-gray-900 mt-2">4</p>
+                        </div>
+                        <div class="w-12 h-12 bg-violet-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-star text-violet-600"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <span class="text-violet-600 text-sm font-medium">Score 80+</span>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">In Progress</p>
+                            <p class="text-3xl font-bold text-gray-900 mt-2">3</p>
+                        </div>
+                        <div class="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-clock text-amber-600"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <span class="text-amber-600 text-sm font-medium">Needs review</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter and Search -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 mb-8">
+                <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+                    <div class="relative flex-1 max-w-md">
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        <input type="text" placeholder="Search your ideas..." class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300">
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <select class="border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300">
+                            <option>All Categories</option>
+                            <option>High Potential</option>
+                            <option>In Progress</option>
+                            <option>Completed</option>
+                        </select>
+                        <button class="p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-300">
+                            <i class="fas fa-filter text-gray-600"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ideas Grid -->
+            <!-- @MAP: ideas.map(idea => ( -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Idea Card 1 -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transform hover:scale-105 transition-all duration-300 group cursor-pointer" onclick="showIdeaDetails('1')">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors duration-300" data-bind="idea.title">AI-Powered Fitness Coach</h3>
+                                <p class="text-gray-600 text-sm line-clamp-2" data-bind="idea.problem">Personal fitness coaching is expensive and inaccessible to most people...</p>
+                            </div>
+                            <div class="ml-4">
+                                <div class="w-16 h-16 relative">
+                                    <svg class="w-16 h-16 transform -rotate-90">
+                                        <circle cx="32" cy="32" r="28" stroke="#e5e7eb" stroke-width="4" fill="none"/>
+                                        <circle cx="32" cy="32" r="28" stroke="#10b981" stroke-width="4" fill="none" 
+                                                stroke-dasharray="176" stroke-dashoffset="44" class="transition-all duration-1000"/>
+                                    </svg>
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <span class="text-lg font-bold text-emerald-600" data-bind="idea.score">85</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-3">
+                            <div class="flex items-center text-sm text-gray-600">
+                                <i class="fas fa-users w-4 text-indigo-500 mr-2"></i>
+                                <span data-bind="idea.targetMarket">Health enthusiasts, 25-45</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <i class="fas fa-calendar w-4 text-violet-500 mr-2"></i>
+                                <span data-mock="true">Created 2 days ago</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 pt-4 border-t border-gray-100">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-2">
+                                    <span class="px-2 py-1 bg-emerald-100 text-emerald-700 text-xs font-medium rounded-full">High Potential</span>
+                                    <span class="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">Tech</span>
+                                </div>
+                                <button class="text-gray-400 hover:text-indigo-600 transition-colors duration-300">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Idea Card 2 -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transform hover:scale-105 transition-all duration-300 group cursor-pointer" onclick="showIdeaDetails('2')">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors duration-300" data-bind="idea.title">Sustainable Packaging Solutions</h3>
+                                <p class="text-gray-600 text-sm line-clamp-2" data-bind="idea.problem">E-commerce packaging waste is a growing environmental concern...</p>
+                            </div>
+                            <div class="ml-4">
+                                <div class="w-16 h-16 relative">
+                                    <svg class="w-16 h-16 transform -rotate-90">
+                                        <circle cx="32" cy="32" r="28" stroke="#e5e7eb" stroke-width="4" fill="none"/>
+                                        <circle cx="32" cy="32" r="28" stroke="#f59e0b" stroke-width="4" fill="none" 
+                                                stroke-dasharray="176" stroke-dashoffset="70" class="transition-all duration-1000"/>
+                                    </svg>
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <span class="text-lg font-bold text-amber-600" data-bind="idea.score">72</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-3">
+                            <div class="flex items-center text-sm text-gray-600">
+                                <i class="fas fa-building w-4 text-indigo-500 mr-2"></i>
+                                <span data-bind="idea.targetMarket">E-commerce businesses</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <i class="fas fa-calendar w-4 text-violet-500 mr-2"></i>
+                                <span data-mock="true">Created 1 week ago</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 pt-4 border-t border-gray-100">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-2">
+                                    <span class="px-2 py-1 bg-amber-100 text-amber-700 text-xs font-medium rounded-full">Medium</span>
+                                    <span class="px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">Green</span>
+                                </div>
+                                <button class="text-gray-400 hover:text-indigo-600 transition-colors duration-300">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Idea Card 3 -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transform hover:scale-105 transition-all duration-300 group cursor-pointer" onclick="showIdeaDetails('3')">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors duration-300" data-bind="idea.title">Remote Team Collaboration Tool</h3>
+                                <p class="text-gray-600 text-sm line-clamp-2" data-bind="idea.problem">Remote teams struggle with asynchronous communication and project visibility...</p>
+                            </div>
+                            <div class="ml-4">
+                                <div class="w-16 h-16 relative">
+                                    <svg class="w-16 h-16 transform -rotate-90">
+                                        <circle cx="32" cy="32" r="28" stroke="#e5e7eb" stroke-width="4" fill="none"/>
+                                        <circle cx="32" cy="32" r="28" stroke="#ef4444" stroke-width="4" fill="none" 
+                                                stroke-dasharray="176" stroke-dashoffset="106" class="transition-all duration-1000"/>
+                                    </svg>
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <span class="text-lg font-bold text-red-600" data-bind="idea.score">58</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-3">
+                            <div class="flex items-center text-sm text-gray-600">
+                                <i class="fas fa-laptop w-4 text-indigo-500 mr-2"></i>
+                                <span data-bind="idea.targetMarket">Remote teams, SMBs</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <i class="fas fa-calendar w-4 text-violet-500 mr-2"></i>
+                                <span data-mock="true">Created 3 days ago</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 pt-4 border-t border-gray-100">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-2">
+                                    <span class="px-2 py-1 bg-red-100 text-red-700 text-xs font-medium rounded-full">Needs Work</span>
+                                    <span class="px-2 py-1 bg-purple-100 text-purple-700 text-xs font-medium rounded-full">SaaS</span>
+                                </div>
+                                <button class="text-gray-400 hover:text-indigo-600 transition-colors duration-300">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- @END_MAP )) -->
+        </div>
+    </div>
+    <!-- @END_COMPONENT: Dashboard -->
+
+    <!-- @COMPONENT: IdeaSubmissionForm [multi-step form wizard] -->
+    <div id="ideaForm" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto animate-scale-in">
+            <!-- Form Header -->
+            <div class="sticky top-0 bg-white border-b border-gray-200 px-8 py-6 rounded-t-2xl">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Validate Your Startup Idea</h2>
+                        <p class="text-gray-600 mt-1">Complete the form to get your viability score and feedback</p>
+                    </div>
+                    <button onclick="hideIdeaForm()" class="p-2 hover:bg-gray-100 rounded-lg transition-colors duration-300">
+                        <i class="fas fa-times text-gray-400"></i>
+                    </button>
+                </div>
+                
+                <!-- Progress Bar -->
+                <div class="mt-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-medium text-gray-700">Step <span id="currentStep">1</span> of 5</span>
+                        <span class="text-sm text-gray-500"><span id="progressPercent">20</span>% Complete</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div id="progressBar" class="bg-gradient-to-r from-indigo-500 to-violet-500 h-2 rounded-full transition-all duration-500 w-1/5"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Steps -->
+            <div class="p-8">
+                <!-- @STATE: currentStep:number = 1 -->
+                
+                <!-- Step 1: Problem Definition -->
+                <div id="step1" class="form-step">
+                    <div class="mb-6">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">What problem are you solving?</h3>
+                        <p class="text-gray-600">Clearly define the pain point your startup addresses</p>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Problem Statement *</label>
+                            <textarea data-bind="idea.problem" placeholder="Describe the specific problem you're addressing..." 
+                                    class="w-full h-32 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300 resize-none"
+                                    oninput="updateCharCount(this, 'problemCount', 500)"></textarea>
+                            <div class="flex justify-between items-center mt-2">
+                                <span class="text-sm text-gray-500">Be specific about who experiences this problem and how often</span>
+                                <span id="problemCount" class="text-sm text-gray-400">0/500</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Problem Severity</label>
+                            <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300">
+                                <option>Select severity level...</option>
+                                <option>Minor inconvenience</option>
+                                <option>Moderate frustration</option>
+                                <option>Major pain point</option>
+                                <option>Critical business issue</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-3">Who experiences this problem? (Select all that apply)</label>
+                            <div class="grid grid-cols-2 gap-3">
+                                <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors duration-300">
+                                    <input type="checkbox" class="mr-3 text-indigo-600 focus:ring-indigo-500">
+                                    <span class="text-sm">Individuals</span>
+                                </label>
+                                <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors duration-300">
+                                    <input type="checkbox" class="mr-3 text-indigo-600 focus:ring-indigo-500">
+                                    <span class="text-sm">Small Businesses</span>
+                                </label>
+                                <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors duration-300">
+                                    <input type="checkbox" class="mr-3 text-indigo-600 focus:ring-indigo-500">
+                                    <span class="text-sm">Enterprises</span>
+                                </label>
+                                <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors duration-300">
+                                    <input type="checkbox" class="mr-3 text-indigo-600 focus:ring-indigo-500">
+                                    <span class="text-sm">Organizations</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Solution -->
+                <div id="step2" class="form-step hidden">
+                    <div class="mb-6">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">What's your solution?</h3>
+                        <p class="text-gray-600">Describe how you plan to solve the problem</p>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Solution Description *</label>
+                            <textarea data-bind="idea.solution" placeholder="Explain your proposed solution in detail..." 
+                                    class="w-full h-32 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300 resize-none"
+                                    oninput="updateCharCount(this, 'solutionCount', 500)"></textarea>
+                            <div class="flex justify-between items-center mt-2">
+                                <span class="text-sm text-gray-500">Focus on the unique value proposition and key features</span>
+                                <span id="solutionCount" class="text-sm text-gray-400">0/500</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-3">Solution Type</label>
+                            <div class="grid grid-cols-2 gap-3">
+                                <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-indigo-300 cursor-pointer transition-all duration-300">
+                                    <input type="radio" name="solutionType" class="mr-3 text-indigo-600 focus:ring-indigo-500">
+                                    <div>
+                                        <div class="font-medium text-gray-900">Digital Product</div>
+                                        <div class="text-sm text-gray-500">App, website, software</div>
+                                    </div>
+                                </label>
+                                <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-indigo-300 cursor-pointer transition-all duration-300">
+                                    <input type="radio" name="solutionType" class="mr-3 text-indigo-600 focus:ring-indigo-500">
+                                    <div>
+                                        <div class="font-medium text-gray-900">Physical Product</div>
+                                        <div class="text-sm text-gray-500">Hardware, device, goods</div>
+                                    </div>
+                                </label>
+                                <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-indigo-300 cursor-pointer transition-all duration-300">
+                                    <input type="radio" name="solutionType" class="mr-3 text-indigo-600 focus:ring-indigo-500">
+                                    <div>
+                                        <div class="font-medium text-gray-900">Service</div>
+                                        <div class="text-sm text-gray-500">Consulting, marketplace</div>
+                                    </div>
+                                </label>
+                                <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-indigo-300 cursor-pointer transition-all duration-300">
+                                    <input type="radio" name="solutionType" class="mr-3 text-indigo-600 focus:ring-indigo-500">
+                                    <div>
+                                        <div class="font-medium text-gray-900">Platform</div>
+                                        <div class="text-sm text-gray-500">Connecting users</div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Key Features (Top 3)</label>
+                            <div class="space-y-3">
+                                <input type="text" placeholder="Feature 1" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300">
+                                <input type="text" placeholder="Feature 2" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300">
+                                <input type="text" placeholder="Feature 3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Target Market -->
+                <div id="step3" class="form-step hidden">
+                    <div class="mb-6">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Who is your target market?</h3>
+                        <p class="text-gray-600">Define your ideal customers and market size</p>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Target Audience *</label>
+                            <textarea data-bind="idea.targetMarket" placeholder="Describe your ideal customers, their demographics, and characteristics..." 
+                                    class="w-full h-24 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300 resize-none"
+                                    oninput="updateCharCount(this, 'marketCount', 300)"></textarea>
+                            <span id="marketCount" class="text-sm text-gray-400 float-right mt-1">0/300</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Market Size</label>
+                                <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300">
+                                    <option>Select market size...</option>
+                                    <option>Niche (< 1M people)</option>
+                                    <option>Small (1-10M people)</option>
+                                    <option>Medium (10-100M people)</option>
+                                    <option>Large (> 100M people)</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Geographic Focus</label>
+                                <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300">
+                                    <option>Select geographic focus...</option>
+                                    <option>Local/City</option>
+                                    <option>Regional/State</option>
+                                    <option>National</option>
+                                    <option>International</option>
+                                    <option>Global</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-3">Customer Acquisition Channels (Select all that apply)</label>
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors duration-300">
+                                    <input type="checkbox" class="mr-3 text-indigo-600 focus:ring-indigo-500">
+                                    <span class="text-sm">Social Media</span>
+                                </label>
+                                <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors duration-300">
+                                    <input type="checkbox" class="mr-3 text-indigo-600 focus:ring-indigo-500">
+                                    <span class="text-sm">SEO/Content</span>
+                                </label>
+                                <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors duration-300">
+                                    <input type="checkbox" class="mr-3 text-indigo-600 focus:ring-indigo-500">
+                                    <span class="text-sm">Paid Ads</span>
+                                </label>
+                                <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors duration-300">
+                                    <input type="checkbox" class="mr-3 text-indigo-600 focus:ring-indigo-500">
+                                    <span class="text-sm">Referrals</span>
+                                </label>
+                                <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors duration-300">
+                                    <input type="checkbox" class="mr-3 text-indigo-600 focus:ring-indigo-500">
+                                    <span class="text-sm">Partnerships</span>
+                                </label>
+                                <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors duration-300">
+                                    <input type="checkbox" class="mr-3 text-indigo-600 focus:ring-indigo-500">
+                                    <span class="text-sm">Events</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Business Model -->
+                <div id="step4" class="form-step hidden">
+                    <div class="mb-6">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">How will you make money?</h3>
+                        <p class="text-gray-600">Define your revenue model and pricing strategy</p>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-3">Revenue Model</label>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-indigo-300 cursor-pointer transition-all duration-300">
+                                    <input type="radio" name="revenueModel" class="mr-3 text-indigo-600 focus:ring-indigo-500">
+                                    <div>
+                                        <div class="font-medium text-gray-900">Subscription</div>
+                                        <div class="text-sm text-gray-500">Recurring monthly/yearly fees</div>
+                                    </div>
+                                </label>
+                                <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-indigo-300 cursor-pointer transition-all duration-300">
+                                    <input type="radio" name="revenueModel" class="mr-3 text-indigo-600 focus:ring-indigo-500">
+                                    <div>
+                                        <div class="font-medium text-gray-900">One-time Purchase</div>
+                                        <div class="text-sm text-gray-500">Single payment for product</div>
+                                    </div>
+                                </label>
+                                <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-indigo-300 cursor-pointer transition-all duration-300">
+                                    <input type="radio" name="revenueModel" class="mr-3 text-indigo-600 focus:ring-indigo-500">
+                                    <div>
+                                        <div class="font-medium text-gray-900">Freemium</div>
+                                        <div class="text-sm text-gray-500">Free with paid upgrades</div>
+                                    </div>
+                                </label>
+                                <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-indigo-300 cursor-pointer transition-all duration-300">
+                                    <input type="radio" name="revenueModel" class="mr-3 text-indigo-600 focus:ring-indigo-500">
+                                    <div>
+                                        <div class="font-medium text-gray-900">Commission/Marketplace</div>
+                                        <div class="text-sm text-gray-500">Take % of transactions</div>
+                                    </div>
+                                </label>
+                                <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-indigo-300 cursor-pointer transition-all duration-300">
+                                    <input type="radio" name="revenueModel" class="mr-3 text-indigo-600 focus:ring-indigo-500">
+                                    <div>
+                                        <div class="font-medium text-gray-900">Advertising</div>
+                                        <div class="text-sm text-gray-500">Revenue from ads</div>
+                                    </div>
+                                </label>
+                                <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-indigo-300 cursor-pointer transition-all duration-300">
+                                    <input type="radio" name="revenueModel" class="mr-3 text-indigo-600 focus:ring-indigo-500">
+                                    <div>
+                                        <div class="font-medium text-gray-900">Licensing</div>
+                                        <div class="text-sm text-gray-500">License technology/content</div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Expected Price Point</label>
+                                <div class="relative">
+                                    <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                                    <input type="number" placeholder="0.00" class="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Pricing Period</label>
+                                <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300">
+                                    <option>One-time</option>
+                                    <option>Per month</option>
+                                    <option>Per year</option>
+                                    <option>Per use</option>
+                                    <option>Per transaction</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Business Model Details</label>
+                            <textarea data-bind="idea.businessModel" placeholder="Explain your revenue strategy, cost structure, and how you'll scale..." 
+                                    class="w-full h-24 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300 resize-none"
+                                    oninput="updateCharCount(this, 'businessCount', 300)"></textarea>
+                            <span id="businessCount" class="text-sm text-gray-400 float-right mt-1">0/300</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5: Competition & Team -->
+                <div id="step5" class="form-step hidden">
+                    <div class="mb-6">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Competition & Team</h3>
+                        <p class="text-gray-600">Analyze your competitive landscape and team capabilities</p>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Competition Analysis *</label>
+                            <textarea data-bind="idea.competition" placeholder="Who are your main competitors? What makes you different or better?" 
+                                    class="w-full h-24 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300 resize-none"
+                                    oninput="updateCharCount(this, 'competitionCount', 400)"></textarea>
+                            <span id="competitionCount" class="text-sm text-gray-400 float-right mt-1">0/400</span>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-3">Competition Level</label>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-indigo-300 cursor-pointer transition-all duration-300">
+                                    <input type="radio" name="competitionLevel" class="mr-3 text-indigo-600 focus:ring-indigo-500">
+                                    <div>
+                                        <div class="font-medium text-gray-900">Low</div>
+                                        <div class="text-sm text-gray-500">Few competitors</div>
+                                    </div>
+                                </label>
+                                <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-indigo-300 cursor-pointer transition-all duration-300">
+                                    <input type="radio" name="competitionLevel" class="mr-3 text-indigo-600 focus:ring-indigo-500">
+                                    <div>
+                                        <div class="font-medium text-gray-900">Medium</div>
+                                        <div class="text-sm text-gray-500">Several competitors</div>
+                                    </div>
+                                </label>
+                                <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-indigo-300 cursor-pointer transition-all duration-300">
+                                    <input type="radio" name="competitionLevel" class="mr-3 text-indigo-600 focus:ring-indigo-500">
+                                    <div>
+                                        <div class="font-medium text-gray-900">High</div>
+                                        <div class="text-sm text-gray-500">Many competitors</div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Team & Experience</label>
+                            <textarea data-bind="idea.team" placeholder="Describe your team, relevant experience, and key skills..." 
+                                    class="w-full h-24 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300 resize-none"
+                                    oninput="updateCharCount(this, 'teamCount', 300)"></textarea>
+                            <span id="teamCount" class="text-sm text-gray-400 float-right mt-1">0/300</span>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-3">Team Size</label>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors duration-300">
+                                    <input type="radio" name="teamSize" class="mr-3 text-indigo-600 focus:ring-indigo-500">
+                                    <span class="text-sm">Solo founder</span>
+                                </label>
+                                <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors duration-300">
+                                    <input type="radio" name="teamSize" class="mr-3 text-indigo-600 focus:ring-indigo-500">
+                                    <span class="text-sm">2-3 people</span>
+                                </label>
+                                <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors duration-300">
+                                    <input type="radio" name="teamSize" class="mr-3 text-indigo-600 focus:ring-indigo-500">
+                                    <span class="text-sm">4-6 people</span>
+                                </label>
+                                <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors duration-300">
+                                    <input type="radio" name="teamSize" class="mr-3 text-indigo-600 focus:ring-indigo-500">
+                                    <span class="text-sm">7+ people</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Footer -->
+            <div class="sticky bottom-0 bg-white border-t border-gray-200 px-8 py-6 rounded-b-2xl">
+                <div class="flex items-center justify-between">
+                    <button id="prevBtn" onclick="previousStep()" class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                        <i class="fas fa-arrow-left mr-2"></i>
+                        Previous
+                    </button>
+                    
+                    <div class="flex items-center space-x-3">
+                        <button onclick="saveAsDraft()" class="px-4 py-3 text-gray-600 hover:text-gray-800 font-medium transition-colors duration-300">
+                            <i class="fas fa-save mr-2"></i>
+                            Save Draft
+                        </button>
+                        <button id="nextBtn" onclick="nextStep()" class="px-6 py-3 bg-gradient-to-r from-indigo-500 to-violet-500 text-white rounded-lg font-medium hover:shadow-lg transform hover:scale-105 transition-all duration-300">
+                            Next
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                        <button id="submitBtn" onclick="submitIdea()" class="hidden px-6 py-3 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white rounded-lg font-medium hover:shadow-lg transform hover:scale-105 transition-all duration-300">
+                            <i class="fas fa-check mr-2"></i>
+                            Submit for Analysis
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- @END_COMPONENT: IdeaSubmissionForm -->
+
+    <!-- @COMPONENT: IdeaDetailsModal [detailed view of idea with feedback] -->
+    <div id="ideaDetails" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-y-auto animate-scale-in">
+            <!-- Header -->
+            <div class="sticky top-0 bg-white border-b border-gray-200 px-8 py-6 rounded-t-2xl">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 relative">
+                            <svg class="w-16 h-16 transform -rotate-90">
+                                <circle cx="32" cy="32" r="28" stroke="#e5e7eb" stroke-width="4" fill="none"/>
+                                <circle cx="32" cy="32" r="28" stroke="#10b981" stroke-width="4" fill="none" 
+                                        stroke-dasharray="176" stroke-dashoffset="44" class="transition-all duration-1000"/>
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <span class="text-2xl font-bold text-emerald-600">85</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-900" data-bind="idea.title">AI-Powered Fitness Coach</h2>
+                            <p class="text-gray-600 mt-1">High viability score - Strong market potential</p>
+                        </div>
+                    </div>
+                    <button onclick="hideIdeaDetails()" class="p-2 hover:bg-gray-100 rounded-lg transition-colors duration-300">
+                        <i class="fas fa-times text-gray-400"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="p-8">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Main Content -->
+                    <div class="lg:col-span-2 space-y-8">
+                        <!-- Problem & Solution -->
+                        <div class="bg-gray-50 rounded-xl p-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Problem & Solution</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <h4 class="font-medium text-gray-700 mb-2">Problem</h4>
+                                    <p class="text-gray-600" data-bind="idea.problem">Personal fitness coaching is expensive and inaccessible to most people. Many struggle with consistency, proper form, and personalized workout plans that adapt to their progress and limitations.</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-700 mb-2">Solution</h4>
+                                    <p class="text-gray-600" data-bind="idea.solution">An AI-powered mobile app that provides personalized fitness coaching using computer vision to analyze form, adaptive workout plans based on user progress, and real-time feedback. The app includes nutrition guidance, progress tracking, and community features.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Market & Business Model -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-blue-50 rounded-xl p-6">
+                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Target Market</h3>
+                                <p class="text-gray-600 mb-4" data-bind="idea.targetMarket">Health-conscious individuals aged 25-45, primarily urban professionals who want fitness guidance but lack time or budget for personal trainers.</p>
+                                <div class="space-y-2">
+                                    <div class="flex items-center text-sm text-gray-600">
+                                        <i class="fas fa-users w-4 text-blue-500 mr-2"></i>
+                                        <span>Market Size: Large (100M+ people)</span>
+                                    </div>
+                                    <div class="flex items-center text-sm text-gray-600">
+                                        <i class="fas fa-globe w-4 text-blue-500 mr-2"></i>
+                                        <span>Geographic: Global</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-green-50 rounded-xl p-6">
+                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Business Model</h3>
+                                <p class="text-gray-600 mb-4" data-bind="idea.businessModel">Freemium subscription model with basic workouts free and premium features including AI form analysis, personalized nutrition plans, and advanced analytics at $9.99/month.</p>
+                                <div class="space-y-2">
+                                    <div class="flex items-center text-sm text-gray-600">
+                                        <i class="fas fa-dollar-sign w-4 text-green-500 mr-2"></i>
+                                        <span>Revenue: Subscription</span>
+                                    </div>
+                                    <div class="flex items-center text-sm text-gray-600">
+                                        <i class="fas fa-chart-line w-4 text-green-500 mr-2"></i>
+                                        <span>Price: $9.99/month</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Competition & Team -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-amber-50 rounded-xl p-6">
+                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Competition</h3>
+                                <p class="text-gray-600" data-bind="idea.competition">Main competitors include Nike Training Club, MyFitnessPal, and Freeletics. Our differentiator is the AI-powered form analysis using computer vision, which most competitors lack.</p>
+                                <div class="mt-3">
+                                    <span class="px-3 py-1 bg-amber-200 text-amber-800 text-sm font-medium rounded-full">Medium Competition</span>
+                                </div>
+                            </div>
+
+                            <div class="bg-violet-50 rounded-xl p-6">
+                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Team</h3>
+                                <p class="text-gray-600" data-bind="idea.team">Founding team of 3: ML engineer with computer vision experience, former personal trainer, and mobile app developer. Combined 15+ years experience in fitness and technology.</p>
+                                <div class="mt-3">
+                                    <span class="px-3 py-1 bg-violet-200 text-violet-800 text-sm font-medium rounded-full">2-3 People</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar -->
+                    <div class="space-y-6">
+                        <!-- Score Breakdown -->
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Score Breakdown</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-sm font-medium text-gray-700">Market Potential</span>
+                                        <span class="text-sm font-medium text-emerald-600">92/100</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-emerald-500 h-2 rounded-full w-11/12"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-sm font-medium text-gray-700">Solution Quality</span>
+                                        <span class="text-sm font-medium text-emerald-600">88/100</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-emerald-500 h-2 rounded-full w-4/5"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-sm font-medium text-gray-700">Team Strength</span>
+                                        <span class="text-sm font-medium text-emerald-600">85/100</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-emerald-500 h-2 rounded-full w-4/5"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-sm font-medium text-gray-700">Business Model</span>
+                                        <span class="text-sm font-medium text-emerald-600">82/100</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-emerald-500 h-2 rounded-full w-4/5"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-sm font-medium text-gray-700">Competition Risk</span>
+                                        <span class="text-sm font-medium text-amber-600">78/100</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-amber-500 h-2 rounded-full w-3/4"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- AI Feedback -->
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                                <i class="fas fa-robot text-indigo-600 mr-2"></i>
+                                AI Feedback
+                            </h3>
+                            <div class="space-y-4">
+                                <div class="p-4 bg-emerald-50 rounded-lg border-l-4 border-emerald-400">
+                                    <h4 class="font-medium text-emerald-800 mb-2">Strengths</h4>
+                                    <ul class="text-sm text-emerald-700 space-y-1">
+                                        <li>• Strong technical differentiation</li>
+                                        <li>• Large addressable market</li>
+                                        <li>• Experienced team composition</li>
+                                        <li>• Clear monetization strategy</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="p-4 bg-amber-50 rounded-lg border-l-4 border-amber-400">
+                                    <h4 class="font-medium text-amber-800 mb-2">Areas to Improve</h4>
+                                    <ul class="text-sm text-amber-700 space-y-1">
+                                        <li>• Define customer acquisition strategy</li>
+                                        <li>• Research regulatory requirements</li>
+                                        <li>• Validate technical feasibility</li>
+                                        <li>• Plan for scaling infrastructure</li>
+                                    </ul>
+                                </div>
+
+                                <div class="p-4 bg-blue-50 rounded-lg border-l-4 border-blue-400">
+                                    <h4 class="font-medium text-blue-800 mb-2">Next Steps</h4>
+                                    <ul class="text-sm text-blue-700 space-y-1">
+                                        <li>• Create MVP prototype</li>
+                                        <li>• Conduct user interviews</li>
+                                        <li>• Test computer vision accuracy</li>
+                                        <li>• Develop go-to-market plan</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Actions</h3>
+                            <div class="space-y-3">
+                                <button class="w-full bg-gradient-to-r from-indigo-500 to-violet-500 text-white px-4 py-3 rounded-lg font-medium hover:shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center justify-center">
+                                    <i class="fas fa-edit mr-2"></i>
+                                    Edit Idea
+                                </button>
+                                <button class="w-full bg-emerald-500 text-white px-4 py-3 rounded-lg font-medium hover:bg-emerald-600 transition-colors duration-300 flex items-center justify-center">
+                                    <i class="fas fa-download mr-2"></i>
+                                    Export Report
+                                </button>
+                                <button class="w-full bg-cyan-500 text-white px-4 py-3 rounded-lg font-medium hover:bg-cyan-600 transition-colors duration-300 flex items-center justify-center">
+                                    <i class="fas fa-share mr-2"></i>
+                                    Share Idea
+                                </button>
+                                <button class="w-full border border-red-300 text-red-600 px-4 py-3 rounded-lg font-medium hover:bg-red-50 transition-colors duration-300 flex items-center justify-center">
+                                    <i class="fas fa-trash mr-2"></i>
+                                    Delete Idea
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- @END_COMPONENT: IdeaDetailsModal -->
+
+    <!-- @COMPONENT: AuthModal [login/register modal] -->
+    <div id="authModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full animate-scale-in">
+            <div class="p-8">
+                <div class="text-center mb-8">
+                    <div class="w-16 h-16 bg-gradient-to-r from-indigo-500 to-violet-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-lightbulb text-white text-2xl"></i>
+                    </div>
+                    <h2 id="authTitle" class="text-2xl font-bold text-gray-900">Welcome to Drishti</h2>
+                    <p id="authSubtitle" class="text-gray-600 mt-2">Sign in to validate your startup ideas</p>
+                </div>
+
+                <!-- Login Form -->
+                <div id="loginForm">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                            <input type="email" placeholder="Enter your email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                            <input type="password" placeholder="Enter your password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300">
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="mr-2 text-indigo-600 focus:ring-indigo-500">
+                                <span class="text-sm text-gray-600">Remember me</span>
+                            </label>
+                            <a href="#" class="text-sm text-indigo-600 hover:text-indigo-700">Forgot password?</a>
+                        </div>
+                        <button onclick="login()" class="w-full bg-gradient-to-r from-indigo-500 to-violet-500 text-white px-4 py-3 rounded-lg font-medium hover:shadow-lg transform hover:scale-105 transition-all duration-300">
+                            Sign In
+                        </button>
+                    </div>
+                    <div class="text-center mt-6">
+                        <p class="text-gray-600">Don't have an account? 
+                            <button onclick="switchToRegister()" class="text-indigo-600 hover:text-indigo-700 font-medium">Sign up</button>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Register Form -->
+                <div id="registerForm" class="hidden">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                            <input type="text" placeholder="Enter your full name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                            <input type="email" placeholder="Enter your email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                            <input type="password" placeholder="Create a password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
+                            <input type="password" placeholder="Confirm your password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300">
+                        </div>
+                        <div>
+                            <label class="flex items-start">
+                                <input type="checkbox" class="mr-3 mt-1 text-indigo-600 focus:ring-indigo-500">
+                                <span class="text-sm text-gray-600">I agree to the <a href="#" class="text-indigo-600 hover:text-indigo-700">Terms of Service</a> and <a href="#" class="text-indigo-600 hover:text-indigo-700">Privacy Policy</a></span>
+                            </label>
+                        </div>
+                        <button onclick="register()" class="w-full bg-gradient-to-r from-indigo-500 to-violet-500 text-white px-4 py-3 rounded-lg font-medium hover:shadow-lg transform hover:scale-105 transition-all duration-300">
+                            Create Account
+                        </button>
+                    </div>
+                    <div class="text-center mt-6">
+                        <p class="text-gray-600">Already have an account? 
+                            <button onclick="switchToLogin()" class="text-indigo-600 hover:text-indigo-700 font-medium">Sign in</button>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mt-6 pt-6 border-t border-gray-200">
+                    <button onclick="hideAuthModal()" class="w-full text-gray-600 hover:text-gray-800 font-medium transition-colors duration-300">
+                        Continue as Guest
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- @END_COMPONENT: AuthModal -->
+
+    <script>
+        // Global state management
+        let currentFormStep = 1;
+        let isAuthenticated = false;
+
+        // Navigation functions
+        function showDashboard() {
+            if (!isAuthenticated) {
+                showAuthModal('login');
+                return;
+            }
+            document.getElementById('dashboard').classList.remove('hidden');
+            document.querySelector('nav').style.display = 'none';
+            document.querySelector('section').style.display = 'none';
+        }
+
+        function showDemo() {
+            // TODO: Implement demo video/walkthrough
+            alert('Demo feature coming soon!');
+        }
+
+        // Auth modal functions
+        function showAuthModal(type) {
+            const modal = document.getElementById('authModal');
+            const title = document.getElementById('authTitle');
+            const subtitle = document.getElementById('authSubtitle');
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+
+            if (type === 'login') {
+                title.textContent = 'Welcome Back';
+                subtitle.textContent = 'Sign in to continue validating ideas';
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+            } else {
+                title.textContent = 'Join Drishti';
+                subtitle.textContent = 'Create your account to get started';
+                loginForm.classList.add('hidden');
+                registerForm.classList.remove('hidden');
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function hideAuthModal() {
+            document.getElementById('authModal').classList.add('hidden');
+        }
+
+        function switchToLogin() {
+            showAuthModal('login');
+        }
+
+        function switchToRegister() {
+            showAuthModal('register');
+        }
+
+        function login() {
+            // TODO: Implement actual authentication
+            isAuthenticated = true;
+            hideAuthModal();
+            showDashboard();
+        }
+
+        function register() {
+            // TODO: Implement actual registration
+            isAuthenticated = true;
+            hideAuthModal();
+            showDashboard();
+        }
+
+        // Form functions
+        function showIdeaForm() {
+            document.getElementById('ideaForm').classList.remove('hidden');
+            resetForm();
+        }
+
+        function hideIdeaForm() {
+            document.getElementById('ideaForm').classList.add('hidden');
+        }
+
+        function resetForm() {
+            currentFormStep = 1;
+            updateFormStep();
+            // Reset all form fields
+            document.querySelectorAll('textarea, input').forEach(field => {
+                if (field.type !== 'checkbox' && field.type !== 'radio') {
+                    field.value = '';
+                }
+            });
+        }
+
+        function nextStep() {
+            if (currentFormStep < 5) {
+                currentFormStep++;
+                updateFormStep();
+            }
+        }
+
+        function previousStep() {
+            if (currentFormStep > 1) {
+                currentFormStep--;
+                updateFormStep();
+            }
+        }
+
+        function updateFormStep() {
+            // Hide all steps
+            document.querySelectorAll('.form-step').forEach(step => {
+                step.classList.add('hidden');
+            });
+
+            // Show current step
+            document.getElementById(`step${currentFormStep}`).classList.remove('hidden');
+
+            // Update progress
+            const progressPercent = (currentFormStep / 5) * 100;
+            document.getElementById('progressPercent').textContent = progressPercent;
+            document.getElementById('progressBar').style.width = `${progressPercent}%`;
+            document.getElementById('currentStep').textContent = currentFormStep;
+
+            // Update buttons
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
+
+            prevBtn.disabled = currentFormStep === 1;
+            
+            if (currentFormStep === 5) {
+                nextBtn.classList.add('hidden');
+                submitBtn.classList.remove('hidden');
+            } else {
+                nextBtn.classList.remove('hidden');
+                submitBtn.classList.add('hidden');
+            }
+        }
+
+        function updateCharCount(textarea, counterId, maxLength) {
+            const count = textarea.value.length;
+            const counter = document.getElementById(counterId);
+            counter.textContent = `${count}/${maxLength}`;
+            
+            if (count > maxLength * 0.9) {
+                counter.classList.add('text-red-500');
+                counter.classList.remove('text-gray-400');
+            } else {
+                counter.classList.remove('text-red-500');
+                counter.classList.add('text-gray-400');
+            }
+        }
+
+        function saveAsDraft() {
+            // TODO: Implement draft saving
+            alert('Draft saved successfully!');
+        }
+
+        function submitIdea() {
+            // TODO: Implement form submission and scoring
+            hideIdeaForm();
+            
+            // Simulate processing time
+            setTimeout(() => {
+                alert('Idea submitted successfully! Check your dashboard for the analysis.');
+            }, 500);
+        }
+
+        // Idea details functions
+        function showIdeaDetails(ideaId) {
+            document.getElementById('ideaDetails').classList.remove('hidden');
+            // TODO: Load specific idea data based on ideaId
+        }
+
+        function hideIdeaDetails() {
+            document.getElementById('ideaDetails').classList.add('hidden');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add smooth scrolling to navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Add keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                // ESC to close modals
+                if (e.key === 'Escape') {
+                    hideAuthModal();
+                    hideIdeaForm();
+                    hideIdeaDetails();
+                }
+                
+                // Ctrl/Cmd + N to create new idea
+                if ((e.ctrlKey || e.metaKey) && e.key === 'n') {
+                    e.preventDefault();
+                    if (isAuthenticated) {
+                        showIdeaForm();
+                    }
+                }
+            });
+
+            // Add form validation and real-time feedback
+            document.querySelectorAll('input, textarea, select').forEach(field => {
+                field.addEventListener('focus', function() {
+                    this.parentElement.classList.add('transform', 'scale-105');
+                });
+                
+                field.addEventListener('blur', function() {
+                    this.parentElement.classList.remove('transform', 'scale-105');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

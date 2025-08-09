@@ -1,0 +1,1013 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drishti - Startup Idea Validator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace']
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            500: '#2563eb',
+                            600: '#1d4ed8',
+                            700: '#1e40af'
+                        },
+                        secondary: {
+                            500: '#0891b2',
+                            600: '#0e7490'
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+</head>
+<body class="bg-slate-50 font-sans">
+    <!-- @COMPONENT: App [main application container] -->
+    <div id="app" class="min-h-screen">
+        
+        <!-- Landing Page -->
+        <div id="landing-page" class="page-container">
+            <!-- @COMPONENT: Header [navigation and branding] -->
+            <header class="bg-white shadow-sm border-b">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex justify-between items-center h-16">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-eye text-white text-sm"></i>
+                            </div>
+                            <span class="text-xl font-bold text-slate-900">Drishti</span>
+                        </div>
+                        <nav class="hidden md:flex space-x-8">
+                            <a href="#features" class="text-slate-600 hover:text-slate-900 transition-colors">Features</a>
+                            <a href="#how-it-works" class="text-slate-600 hover:text-slate-900 transition-colors">How it Works</a>
+                            <a href="#pricing" class="text-slate-600 hover:text-slate-900 transition-colors">Pricing</a>
+                        </nav>
+                        <div class="flex items-center space-x-4">
+                            <button onclick="showLogin()" class="text-slate-600 hover:text-slate-900 transition-colors">Log In</button>
+                            <button onclick="showRegister()" class="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600 transition-colors">Get Started</button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- @END_COMPONENT: Header -->
+
+            <!-- Hero Section -->
+            <section class="bg-gradient-to-br from-primary-50 to-secondary-50 py-20">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid lg:grid-cols-2 gap-12 items-center">
+                        <div>
+                            <h1 class="text-4xl lg:text-6xl font-bold text-slate-900 leading-tight mb-6">
+                                Validate Your 
+                                <span class="bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent">
+                                    Startup Ideas
+                                </span>
+                                with Confidence
+                            </h1>
+                            <p class="text-xl text-slate-600 mb-8 leading-relaxed">
+                                Get instant feedback on your startup concepts with our AI-powered validation tool. 
+                                Analyze market potential, competitive landscape, and business viability in minutes.
+                            </p>
+                            <div class="flex flex-col sm:flex-row gap-4">
+                                <button onclick="showRegister()" class="bg-primary-500 text-white px-8 py-4 rounded-lg font-semibold hover:bg-primary-600 transition-colors shadow-lg">
+                                    Start Validating Ideas
+                                </button>
+                                <button class="border border-slate-300 text-slate-700 px-8 py-4 rounded-lg font-semibold hover:bg-slate-50 transition-colors">
+                                    Watch Demo
+                                </button>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <!-- Dashboard Preview Image -->
+                            <div class="bg-white rounded-2xl shadow-2xl p-6 transform rotate-3 hover:rotate-0 transition-transform duration-300">
+                                <div class="bg-slate-100 rounded-lg p-4 mb-4">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <h3 class="font-semibold text-slate-900">AI Food Delivery</h3>
+                                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm font-medium">Score: 87</span>
+                                    </div>
+                                    <p class="text-slate-600 text-sm">AI-powered food delivery optimization platform...</p>
+                                </div>
+                                <div class="grid grid-cols-3 gap-2 text-center">
+                                    <div class="bg-primary-50 p-2 rounded">
+                                        <div class="text-primary-600 font-bold">8.7</div>
+                                        <div class="text-xs text-slate-600">Viability</div>
+                                    </div>
+                                    <div class="bg-secondary-50 p-2 rounded">
+                                        <div class="text-secondary-600 font-bold">9.2</div>
+                                        <div class="text-xs text-slate-600">Market</div>
+                                    </div>
+                                    <div class="bg-purple-50 p-2 rounded">
+                                        <div class="text-purple-600 font-bold">7.8</div>
+                                        <div class="text-xs text-slate-600">Competition</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section id="features" class="py-20 bg-white">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-16">
+                        <h2 class="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">
+                            Everything You Need to Validate Ideas
+                        </h2>
+                        <p class="text-xl text-slate-600 max-w-3xl mx-auto">
+                            Our comprehensive platform provides instant analysis and actionable insights for your startup concepts.
+                        </p>
+                    </div>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="bg-slate-50 rounded-xl p-8 hover:shadow-lg transition-shadow">
+                            <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-6">
+                                <i class="fas fa-brain text-primary-600 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-slate-900 mb-4">AI-Powered Analysis</h3>
+                            <p class="text-slate-600">
+                                Advanced algorithms analyze your idea across multiple dimensions including market size, 
+                                competition, and execution feasibility.
+                            </p>
+                        </div>
+                        <div class="bg-slate-50 rounded-xl p-8 hover:shadow-lg transition-shadow">
+                            <div class="w-12 h-12 bg-secondary-100 rounded-lg flex items-center justify-center mb-6">
+                                <i class="fas fa-chart-line text-secondary-600 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-slate-900 mb-4">Instant Scoring</h3>
+                            <p class="text-slate-600">
+                                Get immediate viability scores from 1-100 with detailed breakdowns of strengths 
+                                and areas for improvement.
+                            </p>
+                        </div>
+                        <div class="bg-slate-50 rounded-xl p-8 hover:shadow-lg transition-shadow">
+                            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-6">
+                                <i class="fas fa-lightbulb text-purple-600 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-slate-900 mb-4">Actionable Feedback</h3>
+                            <p class="text-slate-600">
+                                Receive specific recommendations and next steps to improve your idea's 
+                                market potential and execution strategy.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Login/Register Forms -->
+        <div id="auth-page" class="page-container hidden">
+            <div class="min-h-screen bg-gradient-to-br from-primary-50 to-secondary-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+                <div class="max-w-md w-full space-y-8">
+                    <!-- @COMPONENT: AuthForm [login and registration forms] -->
+                    <div class="bg-white rounded-2xl shadow-xl p-8">
+                        <div class="text-center mb-8">
+                            <div class="flex justify-center mb-4">
+                                <div class="w-12 h-12 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-eye text-white text-xl"></i>
+                                </div>
+                            </div>
+                            <h2 class="text-3xl font-bold text-slate-900">Welcome to Drishti</h2>
+                            <p class="text-slate-600 mt-2">Sign in to validate your startup ideas</p>
+                        </div>
+
+                        <!-- Login Form -->
+                        <div id="login-form">
+                            <form class="space-y-6" data-mock="true">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-2">Email address</label>
+                                    <input type="email" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors" placeholder="Enter your email" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-2">Password</label>
+                                    <input type="password" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors" placeholder="Enter your password" required>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="rounded border-slate-300 text-primary-600 focus:ring-primary-500">
+                                        <span class="ml-2 text-sm text-slate-600">Remember me</span>
+                                    </label>
+                                    <a href="#" class="text-sm text-primary-600 hover:text-primary-500">Forgot password?</a>
+                                </div>
+                                <button type="submit" onclick="showDashboard()" class="w-full bg-primary-500 text-white py-3 rounded-lg font-semibold hover:bg-primary-600 transition-colors">
+                                    Sign in
+                                </button>
+                            </form>
+                            <p class="text-center text-sm text-slate-600 mt-6">
+                                Don't have an account? 
+                                <button onclick="toggleAuthMode()" class="text-primary-600 hover:text-primary-500 font-medium">Sign up</button>
+                            </p>
+                        </div>
+
+                        <!-- Register Form -->
+                        <div id="register-form" class="hidden">
+                            <form class="space-y-6" data-mock="true">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-2">Full name</label>
+                                    <input type="text" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors" placeholder="Enter your full name" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-2">Email address</label>
+                                    <input type="email" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors" placeholder="Enter your email" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-2">Password</label>
+                                    <input type="password" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors" placeholder="Create a password" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-2">Confirm password</label>
+                                    <input type="password" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors" placeholder="Confirm your password" required>
+                                </div>
+                                <button type="submit" onclick="showDashboard()" class="w-full bg-primary-500 text-white py-3 rounded-lg font-semibold hover:bg-primary-600 transition-colors">
+                                    Create account
+                                </button>
+                            </form>
+                            <p class="text-center text-sm text-slate-600 mt-6">
+                                Already have an account? 
+                                <button onclick="toggleAuthMode()" class="text-primary-600 hover:text-primary-500 font-medium">Sign in</button>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- @END_COMPONENT: AuthForm -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard-page" class="page-container hidden">
+            <div class="flex h-screen bg-slate-50">
+                <!-- @COMPONENT: Sidebar [navigation sidebar] -->
+                <div class="w-64 bg-white shadow-lg">
+                    <div class="p-6 border-b">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-eye text-white text-sm"></i>
+                            </div>
+                            <span class="text-xl font-bold text-slate-900">Drishti</span>
+                        </div>
+                    </div>
+                    <nav class="p-6">
+                        <ul class="space-y-2">
+                            <li>
+                                <a href="#" class="flex items-center space-x-3 text-primary-600 bg-primary-50 px-4 py-3 rounded-lg font-medium">
+                                    <i class="fas fa-th-large"></i>
+                                    <span>Dashboard</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="showIdeaForm()" class="flex items-center space-x-3 text-slate-600 hover:text-slate-900 hover:bg-slate-50 px-4 py-3 rounded-lg transition-colors">
+                                    <i class="fas fa-plus"></i>
+                                    <span>New Idea</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center space-x-3 text-slate-600 hover:text-slate-900 hover:bg-slate-50 px-4 py-3 rounded-lg transition-colors">
+                                    <i class="fas fa-chart-bar"></i>
+                                    <span>Analytics</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center space-x-3 text-slate-600 hover:text-slate-900 hover:bg-slate-50 px-4 py-3 rounded-lg transition-colors">
+                                    <i class="fas fa-cog"></i>
+                                    <span>Settings</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="absolute bottom-6 left-6 right-6">
+                        <div class="flex items-center space-x-3 p-3 bg-slate-50 rounded-lg">
+                            <div class="w-8 h-8 bg-slate-300 rounded-full"></div>
+                            <div class="flex-1">
+                                <p class="text-sm font-medium text-slate-900" data-bind="user.name">John Doe</p>
+                                <p class="text-xs text-slate-500" data-bind="user.email">john@example.com</p>
+                            </div>
+                            <button onclick="showLanding()" class="text-slate-400 hover:text-slate-600">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- @END_COMPONENT: Sidebar -->
+
+                <!-- Main Content -->
+                <div class="flex-1 overflow-auto">
+                    <!-- @COMPONENT: DashboardHeader [dashboard header with stats] -->
+                    <header class="bg-white shadow-sm border-b px-8 py-6">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h1 class="text-2xl font-bold text-slate-900">Your Ideas</h1>
+                                <p class="text-slate-600">Validate and track your startup concepts</p>
+                            </div>
+                            <button onclick="showIdeaForm()" class="bg-primary-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-600 transition-colors flex items-center space-x-2">
+                                <i class="fas fa-plus"></i>
+                                <span>New Idea</span>
+                            </button>
+                        </div>
+                    </header>
+                    <!-- @END_COMPONENT: DashboardHeader -->
+
+                    <!-- Stats Cards -->
+                    <div class="p-8">
+                        <div class="grid md:grid-cols-3 gap-6 mb-8">
+                            <div class="bg-white rounded-xl p-6 shadow-sm border">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-slate-600 text-sm font-medium">Total Ideas</p>
+                                        <p class="text-2xl font-bold text-slate-900" data-bind="stats.totalIdeas">12</p>
+                                    </div>
+                                    <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-lightbulb text-primary-600"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-xl p-6 shadow-sm border">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-slate-600 text-sm font-medium">Average Score</p>
+                                        <p class="text-2xl font-bold text-slate-900" data-bind="stats.averageScore">76.3</p>
+                                    </div>
+                                    <div class="w-12 h-12 bg-secondary-100 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-chart-line text-secondary-600"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-xl p-6 shadow-sm border">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-slate-600 text-sm font-medium">High Potential</p>
+                                        <p class="text-2xl font-bold text-slate-900" data-bind="stats.highPotential">4</p>
+                                    </div>
+                                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-star text-green-600"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ideas Grid -->
+                        <!-- @MAP: ideas.map(idea => ( -->
+                        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div class="bg-white rounded-xl p-6 shadow-sm border hover:shadow-md transition-shadow cursor-pointer" onclick="showIdeaDetail('ai-food-delivery')">
+                                <div class="flex justify-between items-start mb-4">
+                                    <h3 class="font-semibold text-slate-900" data-bind="idea.title">AI Food Delivery Platform</h3>
+                                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm font-medium font-mono" data-bind="idea.score">87</span>
+                                </div>
+                                <p class="text-slate-600 text-sm mb-4 line-clamp-3" data-bind="idea.problem">
+                                    Current food delivery apps lack AI optimization for route planning and demand prediction, 
+                                    leading to longer wait times and higher costs.
+                                </p>
+                                <div class="flex justify-between items-center text-xs text-slate-500">
+                                    <span data-bind="idea.createdAt">Created 2 days ago</span>
+                                    <span class="text-green-600 font-medium">High Potential</span>
+                                </div>
+                            </div>
+
+                            <div class="bg-white rounded-xl p-6 shadow-sm border hover:shadow-md transition-shadow cursor-pointer" onclick="showIdeaDetail('eco-packaging')">
+                                <div class="flex justify-between items-start mb-4">
+                                    <h3 class="font-semibold text-slate-900" data-bind="idea.title">Eco-Friendly Packaging</h3>
+                                    <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-sm font-medium font-mono" data-bind="idea.score">72</span>
+                                </div>
+                                <p class="text-slate-600 text-sm mb-4 line-clamp-3" data-bind="idea.problem">
+                                    E-commerce businesses struggle to find cost-effective biodegradable packaging solutions 
+                                    that don't compromise product safety.
+                                </p>
+                                <div class="flex justify-between items-center text-xs text-slate-500">
+                                    <span data-bind="idea.createdAt">Created 5 days ago</span>
+                                    <span class="text-yellow-600 font-medium">Medium Potential</span>
+                                </div>
+                            </div>
+
+                            <div class="bg-white rounded-xl p-6 shadow-sm border hover:shadow-md transition-shadow cursor-pointer" onclick="showIdeaDetail('remote-fitness')">
+                                <div class="flex justify-between items-start mb-4">
+                                    <h3 class="font-semibold text-slate-900" data-bind="idea.title">Remote Fitness Coach</h3>
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm font-medium font-mono" data-bind="idea.score">64</span>
+                                </div>
+                                <p class="text-slate-600 text-sm mb-4 line-clamp-3" data-bind="idea.problem">
+                                    Personal fitness coaching is expensive and inaccessible to many people. 
+                                    Need an AI-powered virtual coach for personalized workouts.
+                                </p>
+                                <div class="flex justify-between items-center text-xs text-slate-500">
+                                    <span data-bind="idea.createdAt">Created 1 week ago</span>
+                                    <span class="text-blue-600 font-medium">Needs Work</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- @END_MAP )) -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Idea Submission Form -->
+        <div id="idea-form-page" class="page-container hidden">
+            <div class="min-h-screen bg-slate-50">
+                <!-- @COMPONENT: IdeaForm [multi-step idea submission form] -->
+                <div class="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                        <!-- Form Header -->
+                        <div class="bg-gradient-to-r from-primary-500 to-secondary-500 px-8 py-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h1 class="text-2xl font-bold text-white">Validate Your Startup Idea</h1>
+                                    <p class="text-primary-100 mt-1">Complete all sections for comprehensive analysis</p>
+                                </div>
+                                <button onclick="showDashboard()" class="text-white hover:text-primary-100 transition-colors">
+                                    <i class="fas fa-times text-xl"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Progress Bar -->
+                        <!-- @STATE: currentStep:number = 1, totalSteps:number = 6 -->
+                        <div class="px-8 py-4 bg-slate-50 border-b">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm font-medium text-slate-700">Step <span id="current-step">1</span> of 6</span>
+                                <span class="text-sm text-slate-500">16% Complete</span>
+                            </div>
+                            <div class="w-full bg-slate-200 rounded-full h-2">
+                                <div id="progress-bar" class="bg-gradient-to-r from-primary-500 to-secondary-500 h-2 rounded-full transition-all duration-300" style="width: 16.67%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Form Steps -->
+                        <div class="p-8">
+                            <!-- Step 1: Problem -->
+                            <div id="step-1" class="form-step">
+                                <div class="mb-6">
+                                    <h2 class="text-xl font-semibold text-slate-900 mb-2">Define the Problem</h2>
+                                    <p class="text-slate-600">What specific problem does your startup idea solve?</p>
+                                </div>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 mb-2">Problem Statement</label>
+                                        <textarea 
+                                            class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors resize-none" 
+                                            rows="4" 
+                                            placeholder="Describe the problem your idea addresses in detail..."
+                                            data-bind="idea.problem"
+                                        ></textarea>
+                                        <p class="text-xs text-slate-500 mt-1">Be specific about who experiences this problem and how it affects them.</p>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 mb-2">Problem Severity</label>
+                                        <select class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors">
+                                            <option>Critical - Causes significant pain/loss</option>
+                                            <option>Important - Causes inconvenience/frustration</option>
+                                            <option>Minor - Nice to have solved</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 2: Solution -->
+                            <div id="step-2" class="form-step hidden">
+                                <div class="mb-6">
+                                    <h2 class="text-xl font-semibold text-slate-900 mb-2">Your Solution</h2>
+                                    <p class="text-slate-600">How does your idea solve the problem you identified?</p>
+                                </div>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 mb-2">Solution Description</label>
+                                        <textarea 
+                                            class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors resize-none" 
+                                            rows="4" 
+                                            placeholder="Explain your solution and how it addresses the problem..."
+                                            data-bind="idea.solution"
+                                        ></textarea>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 mb-2">Key Features</label>
+                                        <textarea 
+                                            class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors resize-none" 
+                                            rows="3" 
+                                            placeholder="List the main features that make your solution unique..."
+                                        ></textarea>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 mb-2">Technology Requirements</label>
+                                        <input 
+                                            type="text" 
+                                            class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors" 
+                                            placeholder="e.g., Mobile app, Web platform, AI/ML, IoT devices..."
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 3: Target Market -->
+                            <div id="step-3" class="form-step hidden">
+                                <div class="mb-6">
+                                    <h2 class="text-xl font-semibold text-slate-900 mb-2">Target Market</h2>
+                                    <p class="text-slate-600">Who are your ideal customers and how large is the market?</p>
+                                </div>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 mb-2">Target Audience</label>
+                                        <textarea 
+                                            class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors resize-none" 
+                                            rows="3" 
+                                            placeholder="Describe your ideal customers, their demographics, and pain points..."
+                                            data-bind="idea.targetMarket"
+                                        ></textarea>
+                                    </div>
+                                    <div class="grid md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-slate-700 mb-2">Market Size</label>
+                                            <select class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors">
+                                                <option>Large (>$1B)</option>
+                                                <option>Medium ($100M-$1B)</option>
+                                                <option>Small ($10M-$100M)</option>
+                                                <option>Niche (<$10M)</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-slate-700 mb-2">Market Growth</label>
+                                            <select class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors">
+                                                <option>Fast growing (>20% annually)</option>
+                                                <option>Growing (5-20% annually)</option>
+                                                <option>Stable (0-5% annually)</option>
+                                                <option>Declining (<0% annually)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 4: Team -->
+                            <div id="step-4" class="form-step hidden">
+                                <div class="mb-6">
+                                    <h2 class="text-xl font-semibold text-slate-900 mb-2">Your Team</h2>
+                                    <p class="text-slate-600">What skills and experience does your team bring?</p>
+                                </div>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 mb-2">Team Composition</label>
+                                        <textarea 
+                                            class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors resize-none" 
+                                            rows="3" 
+                                            placeholder="Describe your team members, their roles, and relevant experience..."
+                                            data-bind="idea.team"
+                                        ></textarea>
+                                    </div>
+                                    <div class="grid md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-slate-700 mb-2">Technical Expertise</label>
+                                            <select class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors">
+                                                <option>Expert - Deep technical knowledge</option>
+                                                <option>Intermediate - Some technical skills</option>
+                                                <option>Beginner - Limited technical experience</option>
+                                                <option>None - No technical background</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-slate-700 mb-2">Industry Experience</label>
+                                            <select class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors">
+                                                <option>Extensive - 5+ years in industry</option>
+                                                <option>Moderate - 2-5 years in industry</option>
+                                                <option>Some - 1-2 years in industry</option>
+                                                <option>None - New to the industry</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 5: Business Model -->
+                            <div id="step-5" class="form-step hidden">
+                                <div class="mb-6">
+                                    <h2 class="text-xl font-semibold text-slate-900 mb-2">Business Model</h2>
+                                    <p class="text-slate-600">How will your startup generate revenue?</p>
+                                </div>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 mb-2">Revenue Model</label>
+                                        <textarea 
+                                            class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors resize-none" 
+                                            rows="3" 
+                                            placeholder="Explain how you plan to make money..."
+                                            data-bind="idea.businessModel"
+                                        ></textarea>
+                                    </div>
+                                    <div class="grid md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-slate-700 mb-2">Revenue Streams</label>
+                                            <select class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors">
+                                                <option>Subscription/SaaS</option>
+                                                <option>One-time purchase</option>
+                                                <option>Commission/Marketplace</option>
+                                                <option>Advertising</option>
+                                                <option>Freemium</option>
+                                                <option>Multiple streams</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-slate-700 mb-2">Pricing Strategy</label>
+                                            <input 
+                                                type="text" 
+                                                class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors" 
+                                                placeholder="e.g., $29/month, $199 one-time, 5% commission..."
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 6: Competition -->
+                            <div id="step-6" class="form-step hidden">
+                                <div class="mb-6">
+                                    <h2 class="text-xl font-semibold text-slate-900 mb-2">Competition Analysis</h2>
+                                    <p class="text-slate-600">Who are your competitors and how do you differentiate?</p>
+                                </div>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 mb-2">Competitors</label>
+                                        <textarea 
+                                            class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors resize-none" 
+                                            rows="3" 
+                                            placeholder="List your main competitors and their strengths/weaknesses..."
+                                            data-bind="idea.competition"
+                                        ></textarea>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 mb-2">Competitive Advantage</label>
+                                        <textarea 
+                                            class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors resize-none" 
+                                            rows="3" 
+                                            placeholder="What makes your solution unique and better than existing alternatives?"
+                                        ></textarea>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 mb-2">Competition Level</label>
+                                        <select class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors">
+                                            <option>Low - Few direct competitors</option>
+                                            <option>Medium - Some established players</option>
+                                            <option>High - Many strong competitors</option>
+                                            <option>Saturated - Market is crowded</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Form Navigation -->
+                            <div class="flex justify-between items-center pt-8 border-t">
+                                <button id="prev-btn" onclick="previousStep()" class="px-6 py-3 border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors hidden">
+                                    <i class="fas fa-arrow-left mr-2"></i>
+                                    Previous
+                                </button>
+                                <div class="flex space-x-4">
+                                    <button class="px-6 py-3 border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors">
+                                        Save Draft
+                                    </button>
+                                    <button id="next-btn" onclick="nextStep()" class="px-6 py-3 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors">
+                                        Next
+                                        <i class="fas fa-arrow-right ml-2"></i>
+                                    </button>
+                                    <button id="submit-btn" onclick="submitIdea()" class="px-6 py-3 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors hidden">
+                                        Validate Idea
+                                        <i class="fas fa-check ml-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- @END_COMPONENT: IdeaForm -->
+            </div>
+        </div>
+
+        <!-- Idea Detail Page -->
+        <div id="idea-detail-page" class="page-container hidden">
+            <div class="min-h-screen bg-slate-50">
+                <!-- @COMPONENT: IdeaDetail [detailed view of validated idea] -->
+                <div class="max-w-6xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+                    <!-- Header -->
+                    <div class="bg-white rounded-2xl shadow-xl mb-8 overflow-hidden">
+                        <div class="bg-gradient-to-r from-primary-500 to-secondary-500 px-8 py-6">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-4">
+                                    <button onclick="showDashboard()" class="text-white hover:text-primary-100 transition-colors">
+                                        <i class="fas fa-arrow-left text-xl"></i>
+                                    </button>
+                                    <div>
+                                        <h1 class="text-2xl font-bold text-white" data-bind="idea.title">AI Food Delivery Platform</h1>
+                                        <p class="text-primary-100" data-bind="idea.createdAt">Validated on March 15, 2024</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-white text-3xl font-bold font-mono" data-bind="idea.viabilityScore">87</div>
+                                    <div class="text-primary-100 text-sm">Viability Score</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Score Breakdown -->
+                        <div class="p-8">
+                            <h2 class="text-xl font-semibold text-slate-900 mb-6">Score Breakdown</h2>
+                            <div class="grid md:grid-cols-3 lg:grid-cols-6 gap-4">
+                                <div class="text-center p-4 bg-slate-50 rounded-lg">
+                                    <div class="text-2xl font-bold text-primary-600 font-mono">9.2</div>
+                                    <div class="text-sm text-slate-600">Problem</div>
+                                </div>
+                                <div class="text-center p-4 bg-slate-50 rounded-lg">
+                                    <div class="text-2xl font-bold text-secondary-600 font-mono">8.8</div>
+                                    <div class="text-sm text-slate-600">Solution</div>
+                                </div>
+                                <div class="text-center p-4 bg-slate-50 rounded-lg">
+                                    <div class="text-2xl font-bold text-purple-600 font-mono">9.1</div>
+                                    <div class="text-sm text-slate-600">Market</div>
+                                </div>
+                                <div class="text-center p-4 bg-slate-50 rounded-lg">
+                                    <div class="text-2xl font-bold text-green-600 font-mono">7.5</div>
+                                    <div class="text-sm text-slate-600">Team</div>
+                                </div>
+                                <div class="text-center p-4 bg-slate-50 rounded-lg">
+                                    <div class="text-2xl font-bold text-blue-600 font-mono">8.3</div>
+                                    <div class="text-sm text-slate-600">Business</div>
+                                </div>
+                                <div class="text-center p-4 bg-slate-50 rounded-lg">
+                                    <div class="text-2xl font-bold text-red-600 font-mono">7.8</div>
+                                    <div class="text-sm text-slate-600">Competition</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Grid -->
+                    <div class="grid lg:grid-cols-2 gap-8">
+                        <!-- Left Column -->
+                        <div class="space-y-8">
+                            <!-- Problem & Solution -->
+                            <div class="bg-white rounded-xl p-6 shadow-sm border">
+                                <h3 class="text-lg font-semibold text-slate-900 mb-4">Problem & Solution</h3>
+                                <div class="space-y-4">
+                                    <div>
+                                        <h4 class="font-medium text-slate-700 mb-2">Problem</h4>
+                                        <p class="text-slate-600" data-bind="idea.problem">
+                                            Current food delivery apps lack AI optimization for route planning and demand prediction, 
+                                            leading to longer wait times, higher costs for restaurants, and frustrated customers.
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium text-slate-700 mb-2">Solution</h4>
+                                        <p class="text-slate-600" data-bind="idea.solution">
+                                            An AI-powered food delivery platform that uses machine learning to optimize delivery routes, 
+                                            predict demand patterns, and dynamically adjust pricing to reduce wait times by 40% 
+                                            and increase delivery efficiency.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Target Market -->
+                            <div class="bg-white rounded-xl p-6 shadow-sm border">
+                                <h3 class="text-lg font-semibold text-slate-900 mb-4">Target Market</h3>
+                                <p class="text-slate-600" data-bind="idea.targetMarket">
+                                    Primary: Urban millennials and Gen Z consumers (ages 20-35) who frequently order food delivery. 
+                                    Secondary: Restaurants looking to optimize their delivery operations and reduce costs. 
+                                    Market size: $150B global food delivery market growing at 11% annually.
+                                </p>
+                            </div>
+
+                            <!-- Business Model -->
+                            <div class="bg-white rounded-xl p-6 shadow-sm border">
+                                <h3 class="text-lg font-semibold text-slate-900 mb-4">Business Model</h3>
+                                <p class="text-slate-600" data-bind="idea.businessModel">
+                                    Revenue streams: 1) Commission from restaurants (12-15%), 2) Delivery fees from customers ($2-5), 
+                                    3) Premium subscription for faster delivery ($9.99/month), 4) Data insights for restaurants ($99/month).
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Right Column -->
+                        <div class="space-y-8">
+                            <!-- AI Feedback -->
+                            <div class="bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-xl p-6">
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-robot text-green-600"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-semibold text-green-900 mb-3">AI Analysis</h3>
+                                        <div class="space-y-3" data-bind="idea.feedback">
+                                            <p class="text-green-800">
+                                                <strong>Strengths:</strong> Strong market demand, clear value proposition, 
+                                                and proven business model in adjacent markets.
+                                            </p>
+                                            <p class="text-green-800">
+                                                <strong>Opportunities:</strong> AI technology creates defensible moat, 
+                                                network effects potential, and multiple revenue streams.
+                                            </p>
+                                            <p class="text-green-800">
+                                                <strong>Recommendations:</strong> Focus on technical team building, 
+                                                secure initial restaurant partnerships, and validate AI algorithms with pilot program.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Team -->
+                            <div class="bg-white rounded-xl p-6 shadow-sm border">
+                                <h3 class="text-lg font-semibold text-slate-900 mb-4">Team</h3>
+                                <p class="text-slate-600" data-bind="idea.team">
+                                    Founder: 8 years experience in logistics technology. 
+                                    Co-founder: Former data scientist at Uber. 
+                                    Technical advisor: Ex-engineering lead at DoorDash. 
+                                    Need to hire: Mobile developers and machine learning engineers.
+                                </p>
+                            </div>
+
+                            <!-- Competition -->
+                            <div class="bg-white rounded-xl p-6 shadow-sm border">
+                                <h3 class="text-lg font-semibold text-slate-900 mb-4">Competition Analysis</h3>
+                                <p class="text-slate-600" data-bind="idea.competition">
+                                    Direct competitors: DoorDash, Uber Eats, Grubhub. 
+                                    Differentiation: Advanced AI optimization, better economics for restaurants, 
+                                    faster delivery times. Competitive advantage: Proprietary ML algorithms 
+                                    and focus on operational efficiency rather than just marketplace expansion.
+                                </p>
+                            </div>
+
+                            <!-- Action Items -->
+                            <div class="bg-blue-50 border border-blue-200 rounded-xl p-6">
+                                <h3 class="text-lg font-semibold text-blue-900 mb-4">Next Steps</h3>
+                                <ul class="space-y-2 text-blue-800">
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-blue-600 mt-1"></i>
+                                        <span>Build MVP with basic AI route optimization</span>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-blue-600 mt-1"></i>
+                                        <span>Partner with 5-10 local restaurants for pilot</span>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-blue-600 mt-1"></i>
+                                        <span>Hire senior ML engineer</span>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-blue-600 mt-1"></i>
+                                        <span>Secure seed funding ($500K-$1M)</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="mt-8 flex justify-between items-center">
+                        <div class="flex space-x-4">
+                            <button class="flex items-center space-x-2 px-4 py-2 border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors">
+                                <i class="fas fa-edit"></i>
+                                <span>Edit Idea</span>
+                            </button>
+                            <button class="flex items-center space-x-2 px-4 py-2 border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors">
+                                <i class="fas fa-download"></i>
+                                <span>Export Report</span>
+                            </button>
+                        </div>
+                        <button class="flex items-center space-x-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
+                            <i class="fas fa-trash"></i>
+                            <span>Delete Idea</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- @END_COMPONENT: IdeaDetail -->
+            </div>
+        </div>
+    </div>
+    <!-- @END_COMPONENT: App -->
+
+    <script>
+        // Page navigation functions
+        function showLanding() {
+            hideAllPages();
+            document.getElementById('landing-page').classList.remove('hidden');
+        }
+
+        function showLogin() {
+            hideAllPages();
+            document.getElementById('auth-page').classList.remove('hidden');
+            document.getElementById('login-form').classList.remove('hidden');
+            document.getElementById('register-form').classList.add('hidden');
+        }
+
+        function showRegister() {
+            hideAllPages();
+            document.getElementById('auth-page').classList.remove('hidden');
+            document.getElementById('login-form').classList.add('hidden');
+            document.getElementById('register-form').classList.remove('hidden');
+        }
+
+        function showDashboard() {
+            hideAllPages();
+            document.getElementById('dashboard-page').classList.remove('hidden');
+        }
+
+        function showIdeaForm() {
+            hideAllPages();
+            document.getElementById('idea-form-page').classList.remove('hidden');
+            // Reset form to step 1
+            currentStep = 1;
+            updateFormStep();
+        }
+
+        function showIdeaDetail(ideaId) {
+            hideAllPages();
+            document.getElementById('idea-detail-page').classList.remove('hidden');
+            // TODO: Load specific idea data based on ideaId
+        }
+
+        function hideAllPages() {
+            const pages = ['landing-page', 'auth-page', 'dashboard-page', 'idea-form-page', 'idea-detail-page'];
+            pages.forEach(pageId => {
+                document.getElementById(pageId).classList.add('hidden');
+            });
+        }
+
+        function toggleAuthMode() {
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            
+            if (loginForm.classList.contains('hidden')) {
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+            } else {
+                loginForm.classList.add('hidden');
+                registerForm.classList.remove('hidden');
+            }
+        }
+
+        // Multi-step form functionality
+        let currentStep = 1;
+        const totalSteps = 6;
+
+        function updateFormStep() {
+            // Hide all steps
+            for (let i = 1; i <= totalSteps; i++) {
+                document.getElementById(`step-${i}`).classList.add('hidden');
+            }
+            
+            // Show current step
+            document.getElementById(`step-${currentStep}`).classList.remove('hidden');
+            
+            // Update progress
+            const progress = (currentStep / totalSteps) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+            document.getElementById('current-step').textContent = currentStep;
+            
+            // Update navigation buttons
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const submitBtn = document.getElementById('submit-btn');
+            
+            if (currentStep === 1) {
+                prevBtn.classList.add('hidden');
+            } else {
+                prevBtn.classList.remove('hidden');
+            }
+            
+            if (currentStep === totalSteps) {
+                nextBtn.classList.add('hidden');
+                submitBtn.classList.remove('hidden');
+            } else {
+                nextBtn.classList.remove('hidden');
+                submitBtn.classList.add('hidden');
+            }
+        }
+
+        function nextStep() {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                updateFormStep();
+            }
+        }
+
+        function previousStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateFormStep();
+            }
+        }
+
+        function submitIdea() {
+            // TODO: Implement form validation and submission
+            // For now, just show a success message and redirect to dashboard
+            alert('Idea submitted successfully! Calculating viability score...');
+            showDashboard();
+        }
+
+        // Initialize the application
+        (() => {
+            showLanding();
+        })();
+    </script>
+</body>
+</html>

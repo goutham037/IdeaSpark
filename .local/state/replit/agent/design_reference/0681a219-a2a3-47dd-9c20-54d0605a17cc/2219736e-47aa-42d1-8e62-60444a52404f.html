@@ -1,0 +1,835 @@
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Startup Idea Validator - Validate Your Next Big Idea</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/heroicons@2.0.18/24/outline/index.js" type="module"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#2563eb',
+                        secondary: '#64748b',
+                        accent: '#10b981',
+                        warning: '#f59e0b',
+                        danger: '#ef4444',
+                    }
+                }
+            }
+        };
+    </script>
+</head>
+<body class="h-full font-inter bg-slate-50 text-slate-800">
+    
+    <!-- @COMPONENT: Navigation [sticky header with logo and auth actions] -->
+    <nav class="bg-white shadow-sm border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-bold text-primary">IdeaValidator</h1>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4" id="nav-actions">
+                    <!-- Landing page actions -->
+                    <div id="guest-actions" class="flex items-center space-x-4">
+                        <button onclick="showLogin()" class="text-secondary hover:text-slate-900 font-medium">Sign In</button>
+                        <button onclick="showRegister()" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-medium">Get Started</button>
+                    </div>
+                    <!-- Authenticated user actions -->
+                    <div id="user-actions" class="hidden flex items-center space-x-4">
+                        <button onclick="showDashboard()" class="text-secondary hover:text-slate-900 font-medium">Dashboard</button>
+                        <div class="relative">
+                            <button onclick="toggleUserMenu()" class="flex items-center space-x-2 text-secondary hover:text-slate-900">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=32&h=32" alt="User avatar" class="w-8 h-8 rounded-full object-cover" data-mock="true">
+                                <span data-bind="user.username">John Doe</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div id="user-menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-slate-200 py-1">
+                                <button class="block w-full text-left px-4 py-2 text-sm text-secondary hover:bg-slate-50">Profile</button>
+                                <button class="block w-full text-left px-4 py-2 text-sm text-secondary hover:bg-slate-50">Settings</button>
+                                <hr class="my-1 border-slate-200">
+                                <button onclick="logout()" class="block w-full text-left px-4 py-2 text-sm text-secondary hover:bg-slate-50">Sign Out</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- @END_COMPONENT: Navigation -->
+
+    <!-- Main Content Container -->
+    <main class="min-h-screen">
+        
+        <!-- @COMPONENT: LandingPage [hero section with value proposition and CTA] -->
+        <section id="landing-page" class="relative">
+            <!-- Hero Section -->
+            <div class="relative bg-white">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+                    <div class="text-center">
+                        <h1 class="text-4xl md:text-6xl font-bold text-slate-900 mb-6">
+                            Validate Your 
+                            <span class="text-primary">Startup Idea</span>
+                            Before You Build
+                        </h1>
+                        <p class="text-xl text-secondary max-w-3xl mx-auto mb-8">
+                            Get AI-powered insights, viability scores, and actionable feedback on your startup concepts. 
+                            Make data-driven decisions before investing time and money.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                            <button onclick="showRegister()" class="bg-primary text-white px-8 py-4 rounded-lg hover:bg-blue-700 font-semibold text-lg">
+                                Start Validating Ideas
+                            </button>
+                            <button onclick="showDemo()" class="border border-slate-300 text-secondary px-8 py-4 rounded-lg hover:bg-slate-50 font-semibold text-lg">
+                                See How It Works
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <div class="bg-slate-50 py-20">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-16">
+                        <h2 class="text-3xl font-bold text-slate-900 mb-4">Why Choose IdeaValidator?</h2>
+                        <p class="text-lg text-secondary max-w-2xl mx-auto">
+                            Our comprehensive evaluation system helps you understand your idea's potential before you invest.
+                        </p>
+                    </div>
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="bg-white p-8 rounded-xl shadow-sm border border-slate-200">
+                            <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+                                <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-semibold text-slate-900 mb-3">Smart Scoring Algorithm</h3>
+                            <p class="text-secondary">Get objective viability scores based on market analysis, competition, and business model strength.</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-xl shadow-sm border border-slate-200">
+                            <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mb-6">
+                                <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-semibold text-slate-900 mb-3">Actionable Insights</h3>
+                            <p class="text-secondary">Receive specific recommendations to improve your idea and increase its chances of success.</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-xl shadow-sm border border-slate-200">
+                            <div class="w-12 h-12 bg-warning/10 rounded-lg flex items-center justify-center mb-6">
+                                <svg class="w-6 h-6 text-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-semibold text-slate-900 mb-3">Track Progress</h3>
+                            <p class="text-secondary">Manage multiple ideas, track improvements, and see how your concepts evolve over time.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- @END_COMPONENT: LandingPage -->
+
+        <!-- @COMPONENT: AuthForms [login and registration modals] -->
+        <div id="auth-overlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+            <div class="bg-white rounded-xl max-w-md w-full p-8 relative">
+                <button onclick="hideAuth()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+
+                <!-- Login Form -->
+                <div id="login-form" class="hidden">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-6">Welcome Back</h2>
+                    <form data-event="submit:handleLogin">
+                        <div class="space-y-4">
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                                <input type="email" id="email" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Enter your email" required>
+                            </div>
+                            <div>
+                                <label for="password" class="block text-sm font-medium text-slate-700 mb-1">Password</label>
+                                <input type="password" id="password" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Enter your password" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full bg-primary text-white py-3 rounded-lg hover:bg-blue-700 font-semibold mt-6">
+                            Sign In
+                        </button>
+                    </form>
+                    <p class="text-center text-sm text-secondary mt-4">
+                        Don't have an account? 
+                        <button onclick="showRegister()" class="text-primary hover:text-blue-700 font-medium">Sign up</button>
+                    </p>
+                </div>
+
+                <!-- Register Form -->
+                <div id="register-form" class="hidden">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-6">Get Started</h2>
+                    <form data-event="submit:handleRegister">
+                        <div class="space-y-4">
+                            <div>
+                                <label for="username" class="block text-sm font-medium text-slate-700 mb-1">Username</label>
+                                <input type="text" id="username" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Choose a username" required>
+                            </div>
+                            <div>
+                                <label for="reg-email" class="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                                <input type="email" id="reg-email" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Enter your email" required>
+                            </div>
+                            <div>
+                                <label for="reg-password" class="block text-sm font-medium text-slate-700 mb-1">Password</label>
+                                <input type="password" id="reg-password" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Create a password" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full bg-primary text-white py-3 rounded-lg hover:bg-blue-700 font-semibold mt-6">
+                            Create Account
+                        </button>
+                    </form>
+                    <p class="text-center text-sm text-secondary mt-4">
+                        Already have an account? 
+                        <button onclick="showLogin()" class="text-primary hover:text-blue-700 font-medium">Sign in</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- @END_COMPONENT: AuthForms -->
+
+        <!-- @COMPONENT: Dashboard [user dashboard showing ideas list] -->
+        <section id="dashboard" class="hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
+                    <div>
+                        <h1 class="text-3xl font-bold text-slate-900">Your Ideas</h1>
+                        <p class="text-secondary mt-1">Manage and track your startup concepts</p>
+                    </div>
+                    <button onclick="showIdeaForm()" class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-blue-700 font-semibold mt-4 sm:mt-0">
+                        <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                        New Idea
+                    </button>
+                </div>
+
+                <!-- Ideas Grid -->
+                <!-- @MAP: ideas.map(idea => ( -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- High Score Idea -->
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-md transition-shadow cursor-pointer" onclick="showIdeaDetails('high-score')">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-lg font-semibold text-slate-900" data-bind="idea.title">AI-Powered Fitness Coach</h3>
+                            <div class="flex items-center space-x-2">
+                                <span class="bg-accent text-white text-sm font-medium px-2 py-1 rounded-full">87</span>
+                                <div class="w-2 h-2 bg-accent rounded-full"></div>
+                            </div>
+                        </div>
+                        <p class="text-secondary text-sm mb-4" data-bind="idea.problem">Personal trainers are expensive and scheduling is difficult for busy professionals.</p>
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-secondary">Last updated: 2 days ago</span>
+                            <span class="text-accent font-medium">High Viability</span>
+                        </div>
+                    </div>
+
+                    <!-- Medium Score Idea -->
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-md transition-shadow cursor-pointer" onclick="showIdeaDetails('medium-score')">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-lg font-semibold text-slate-900" data-bind="idea.title">Smart Plant Monitoring</h3>
+                            <div class="flex items-center space-x-2">
+                                <span class="bg-warning text-white text-sm font-medium px-2 py-1 rounded-full">62</span>
+                                <div class="w-2 h-2 bg-warning rounded-full"></div>
+                            </div>
+                        </div>
+                        <p class="text-secondary text-sm mb-4" data-bind="idea.problem">People struggle to keep plants alive due to inconsistent watering and care.</p>
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-secondary">Last updated: 1 week ago</span>
+                            <span class="text-warning font-medium">Medium Viability</span>
+                        </div>
+                    </div>
+
+                    <!-- Low Score Idea -->
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-md transition-shadow cursor-pointer" onclick="showIdeaDetails('low-score')">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-lg font-semibold text-slate-900" data-bind="idea.title">Flying Car Service</h3>
+                            <div class="flex items-center space-x-2">
+                                <span class="bg-danger text-white text-sm font-medium px-2 py-1 rounded-full">23</span>
+                                <div class="w-2 h-2 bg-danger rounded-full"></div>
+                            </div>
+                        </div>
+                        <p class="text-secondary text-sm mb-4" data-bind="idea.problem">Traffic congestion in cities is getting worse and needs innovative solutions.</p>
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-secondary">Last updated: 2 weeks ago</span>
+                            <span class="text-danger font-medium">Low Viability</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- @END_MAP )) -->
+
+                <!-- Empty State (shown when no ideas exist) -->
+                <div id="empty-state" class="hidden text-center py-16">
+                    <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-slate-900 mb-2">No ideas yet</h3>
+                    <p class="text-secondary mb-6">Start by submitting your first startup idea for validation.</p>
+                    <button onclick="showIdeaForm()" class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-blue-700 font-semibold">
+                        Submit Your First Idea
+                    </button>
+                </div>
+            </div>
+        </section>
+        <!-- @END_COMPONENT: Dashboard -->
+
+        <!-- @COMPONENT: IdeaForm [multi-step form for idea submission] -->
+        <section id="idea-form" class="hidden">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-8">
+                    <!-- Form Header -->
+                    <div class="mb-8">
+                        <div class="flex items-center justify-between mb-4">
+                            <h1 class="text-3xl font-bold text-slate-900">Submit New Idea</h1>
+                            <button onclick="showDashboard()" class="text-secondary hover:text-slate-900">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        
+                        <!-- Progress Bar -->
+                        <!-- @STATE: currentStep:number = 1, totalSteps:number = 6 -->
+                        <div class="w-full bg-slate-200 rounded-full h-2 mb-4">
+                            <div id="progress-bar" class="bg-primary h-2 rounded-full transition-all duration-300" style="width: 16.67%"></div>
+                        </div>
+                        <div class="flex justify-between text-sm text-secondary">
+                            <span>Step <span id="current-step">1</span> of 6</span>
+                            <span id="step-title">Problem Definition</span>
+                        </div>
+                    </div>
+
+                    <!-- Form Steps -->
+                    <form data-event="submit:handleIdeaSubmission">
+                        <!-- Step 1: Problem -->
+                        <div id="step-1" class="form-step">
+                            <h2 class="text-xl font-semibold text-slate-900 mb-4">What problem are you solving?</h2>
+                            <p class="text-secondary mb-6">Clearly describe the problem your startup idea addresses. Be specific about who faces this problem and why it matters.</p>
+                            <textarea 
+                                id="problem" 
+                                name="problem" 
+                                rows="6" 
+                                class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" 
+                                placeholder="Example: Busy professionals struggle to maintain a consistent fitness routine due to time constraints and lack of personalized guidance..."
+                                required
+                                data-mock="true">Small business owners struggle to track inventory efficiently, leading to stockouts and overordering that hurts profitability.</textarea>
+                        </div>
+
+                        <!-- Step 2: Solution -->
+                        <div id="step-2" class="form-step hidden">
+                            <h2 class="text-xl font-semibold text-slate-900 mb-4">What's your solution?</h2>
+                            <p class="text-secondary mb-6">Describe how your product or service solves the problem. Focus on the key features and benefits.</p>
+                            <textarea 
+                                id="solution" 
+                                name="solution" 
+                                rows="6" 
+                                class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" 
+                                placeholder="Example: An AI-powered mobile app that creates personalized workout plans and provides real-time form correction through computer vision..."
+                                required
+                                data-mock="true">A cloud-based inventory management system with AI-powered demand forecasting and automated reorder points.</textarea>
+                        </div>
+
+                        <!-- Step 3: Target Market -->
+                        <div id="step-3" class="form-step hidden">
+                            <h2 class="text-xl font-semibold text-slate-900 mb-4">Who is your target market?</h2>
+                            <p class="text-secondary mb-6">Define your ideal customers, market size, and how you'll reach them.</p>
+                            <textarea 
+                                id="targetMarket" 
+                                name="targetMarket" 
+                                rows="6" 
+                                class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" 
+                                placeholder="Example: Primary market: Busy professionals aged 25-45 with disposable income. Secondary market: Fitness enthusiasts looking for convenience..."
+                                required
+                                data-mock="true">Small to medium retailers (10-200 SKUs), restaurant chains, and e-commerce businesses looking to optimize inventory costs.</textarea>
+                        </div>
+
+                        <!-- Step 4: Team -->
+                        <div id="step-4" class="form-step hidden">
+                            <h2 class="text-xl font-semibold text-slate-900 mb-4">Tell us about your team</h2>
+                            <p class="text-secondary mb-6">Describe your team's background, skills, and relevant experience for this venture.</p>
+                            <textarea 
+                                id="team" 
+                                name="team" 
+                                rows="6" 
+                                class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" 
+                                placeholder="Example: Founder with 5 years of fitness industry experience, technical co-founder with ML background, advisor with startup exits..."
+                                required
+                                data-mock="true">Solo founder with 8 years in supply chain management at Fortune 500 companies. Looking to bring on a technical co-founder.</textarea>
+                        </div>
+
+                        <!-- Step 5: Business Model -->
+                        <div id="step-5" class="form-step hidden">
+                            <h2 class="text-xl font-semibold text-slate-900 mb-4">How will you make money?</h2>
+                            <p class="text-secondary mb-6">Explain your revenue model, pricing strategy, and path to profitability.</p>
+                            <textarea 
+                                id="businessModel" 
+                                name="businessModel" 
+                                rows="6" 
+                                class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" 
+                                placeholder="Example: Freemium model with basic workouts free, premium subscription at $9.99/month for personalized plans and form analysis..."
+                                required
+                                data-mock="true">SaaS subscription model: $49/month for basic plan, $99/month for advanced analytics, $199/month for enterprise features.</textarea>
+                        </div>
+
+                        <!-- Step 6: Competition -->
+                        <div id="step-6" class="form-step hidden">
+                            <h2 class="text-xl font-semibold text-slate-900 mb-4">Who are your competitors?</h2>
+                            <p class="text-secondary mb-6">Identify direct and indirect competitors, and explain your competitive advantage.</p>
+                            <textarea 
+                                id="competition" 
+                                name="competition" 
+                                rows="6" 
+                                class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" 
+                                placeholder="Example: Direct competitors include Fitbod and Nike Training Club. Our advantage is real-time form correction and more personalized recommendations..."
+                                required
+                                data-mock="true">Competing with TradeGecko, inFlow, and Fishbowl. Our advantage is AI-powered forecasting and easier setup for small businesses.</textarea>
+                        </div>
+
+                        <!-- Navigation Buttons -->
+                        <div class="flex justify-between mt-8">
+                            <button type="button" id="prev-btn" onclick="previousStep()" class="hidden bg-slate-200 text-slate-700 px-6 py-3 rounded-lg hover:bg-slate-300 font-semibold">
+                                Previous
+                            </button>
+                            <div class="flex-1"></div>
+                            <button type="button" id="next-btn" onclick="nextStep()" class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-blue-700 font-semibold">
+                                Next Step
+                            </button>
+                            <button type="submit" id="submit-btn" class="hidden bg-accent text-white px-6 py-3 rounded-lg hover:bg-emerald-600 font-semibold">
+                                Get Validation Score
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <!-- @END_COMPONENT: IdeaForm -->
+
+        <!-- @COMPONENT: IdeaDetails [detailed view of a single idea with scores and feedback] -->
+        <section id="idea-details" class="hidden">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div class="flex items-center justify-between mb-8">
+                    <button onclick="showDashboard()" class="flex items-center text-secondary hover:text-slate-900">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                        Back to Dashboard
+                    </button>
+                    <div class="flex space-x-3">
+                        <button class="bg-slate-200 text-slate-700 px-4 py-2 rounded-lg hover:bg-slate-300 font-medium">
+                            Edit Idea
+                        </button>
+                        <button class="bg-danger text-white px-4 py-2 rounded-lg hover:bg-red-600 font-medium">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <!-- Main Content -->
+                    <div class="lg:col-span-2 space-y-8">
+                        <!-- Header -->
+                        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-8">
+                            <div class="flex items-start justify-between mb-6">
+                                <div>
+                                    <h1 class="text-3xl font-bold text-slate-900 mb-2" data-bind="idea.title">AI-Powered Fitness Coach</h1>
+                                    <p class="text-secondary">Submitted on March 15, 2024 • Last updated 2 days ago</p>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-3xl font-bold text-accent mb-1">87</div>
+                                    <div class="text-sm text-secondary">Viability Score</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Score Breakdown -->
+                            <div class="grid grid-cols-3 gap-4">
+                                <div class="text-center p-4 bg-slate-50 rounded-lg">
+                                    <div class="text-xl font-semibold text-slate-900">8.5</div>
+                                    <div class="text-sm text-secondary">Problem Clarity</div>
+                                </div>
+                                <div class="text-center p-4 bg-slate-50 rounded-lg">
+                                    <div class="text-xl font-semibold text-slate-900">9.2</div>
+                                    <div class="text-sm text-secondary">Solution Strength</div>
+                                </div>
+                                <div class="text-center p-4 bg-slate-50 rounded-lg">
+                                    <div class="text-xl font-semibold text-slate-900">7.8</div>
+                                    <div class="text-sm text-secondary">Market Potential</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Problem & Solution -->
+                        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-8">
+                            <h2 class="text-xl font-semibold text-slate-900 mb-4">Problem & Solution</h2>
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="font-medium text-slate-900 mb-2">Problem</h3>
+                                    <p class="text-secondary" data-bind="idea.problem">Personal trainers are expensive and scheduling is difficult for busy professionals who want to maintain their fitness but struggle with consistency and proper form.</p>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-slate-900 mb-2">Solution</h3>
+                                    <p class="text-secondary" data-bind="idea.solution">An AI-powered mobile app that creates personalized workout plans, provides real-time form correction through computer vision, and adapts to user progress and preferences.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Market & Business Model -->
+                        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-8">
+                            <h2 class="text-xl font-semibold text-slate-900 mb-4">Market & Business Model</h2>
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="font-medium text-slate-900 mb-2">Target Market</h3>
+                                    <p class="text-secondary" data-bind="idea.targetMarket">Primary market: Busy professionals aged 25-45 with disposable income. Secondary market: Fitness enthusiasts looking for convenience and personalization.</p>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-slate-900 mb-2">Business Model</h3>
+                                    <p class="text-secondary" data-bind="idea.businessModel">Freemium model with basic workouts free, premium subscription at $9.99/month for personalized plans and form analysis, and corporate packages for workplace wellness.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Team & Competition -->
+                        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-8">
+                            <h2 class="text-xl font-semibold text-slate-900 mb-4">Team & Competition</h2>
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="font-medium text-slate-900 mb-2">Team</h3>
+                                    <p class="text-secondary" data-bind="idea.team">Founder with 5 years of fitness industry experience, technical co-founder with ML background, advisor with previous startup exits in health tech.</p>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-slate-900 mb-2">Competition Analysis</h3>
+                                    <p class="text-secondary" data-bind="idea.competition">Direct competitors include Fitbod and Nike Training Club. Our competitive advantage is real-time form correction using computer vision and more personalized AI recommendations.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar -->
+                    <div class="space-y-6">
+                        <!-- Feedback Card -->
+                        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                            <h3 class="text-lg font-semibold text-slate-900 mb-4">AI Feedback</h3>
+                            <div class="space-y-4">
+                                <div class="p-4 bg-accent/10 border border-accent/20 rounded-lg">
+                                    <div class="flex items-start space-x-3">
+                                        <div class="w-6 h-6 bg-accent rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                            <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-accent mb-1">Strong Problem-Solution Fit</h4>
+                                            <p class="text-sm text-secondary">The problem is clearly defined and affects a large market segment.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="p-4 bg-warning/10 border border-warning/20 rounded-lg">
+                                    <div class="flex items-start space-x-3">
+                                        <div class="w-6 h-6 bg-warning rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                            <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-warning mb-1">Consider Technical Complexity</h4>
+                                            <p class="text-sm text-secondary">Real-time form correction requires significant AI expertise and computational resources.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="p-4 bg-primary/10 border border-primary/20 rounded-lg">
+                                    <div class="flex items-start space-x-3">
+                                        <div class="w-6 h-6 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                            <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-primary mb-1">Recommendation</h4>
+                                            <p class="text-sm text-secondary">Start with simpler features and gradually add AI capabilities as you grow.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Next Steps Card -->
+                        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                            <h3 class="text-lg font-semibold text-slate-900 mb-4">Suggested Next Steps</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                    <span class="text-sm text-secondary">Conduct user interviews with target market</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                    <span class="text-sm text-secondary">Build MVP with basic workout tracking</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                    <span class="text-sm text-secondary">Research computer vision technology partners</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                    <span class="text-sm text-secondary">Validate pricing with potential customers</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Score History Card -->
+                        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                            <h3 class="text-lg font-semibold text-slate-900 mb-4">Score History</h3>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-secondary">Current Version</span>
+                                    <span class="font-semibold text-accent">87</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-secondary">Previous Version</span>
+                                    <span class="font-semibold text-secondary">82</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-secondary">Initial Submission</span>
+                                    <span class="font-semibold text-secondary">76</span>
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-slate-200">
+                                <div class="flex items-center text-sm text-accent">
+                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-4-4"></path>
+                                    </svg>
+                                    +11 points improvement
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- @END_COMPONENT: IdeaDetails -->
+
+    </main>
+
+    <script>
+        // Simple page state management
+        (function() {
+            let currentPage = 'landing';
+            let currentStep = 1;
+            let isAuthenticated = false;
+
+            // Navigation functions
+            window.showLogin = function() {
+                document.getElementById('auth-overlay').classList.remove('hidden');
+                document.getElementById('login-form').classList.remove('hidden');
+                document.getElementById('register-form').classList.add('hidden');
+            }
+
+            window.showRegister = function() {
+                document.getElementById('auth-overlay').classList.remove('hidden');
+                document.getElementById('register-form').classList.remove('hidden');
+                document.getElementById('login-form').classList.add('hidden');
+            }
+
+            window.hideAuth = function() {
+                document.getElementById('auth-overlay').classList.add('hidden');
+            }
+
+            window.showDashboard = function() {
+                hideAllPages();
+                document.getElementById('dashboard').classList.remove('hidden');
+                updateNavigation(true);
+                currentPage = 'dashboard';
+            }
+
+            window.showIdeaForm = function() {
+                hideAllPages();
+                document.getElementById('idea-form').classList.remove('hidden');
+                updateNavigation(true);
+                currentPage = 'idea-form';
+                resetForm();
+            }
+
+            window.showIdeaDetails = function(ideaId) {
+                hideAllPages();
+                document.getElementById('idea-details').classList.remove('hidden');
+                updateNavigation(true);
+                currentPage = 'idea-details';
+                // TODO: Load specific idea data based on ideaId
+            }
+
+            window.showDemo = function() {
+                // TODO: Implement demo functionality
+                alert('Demo functionality would be implemented here');
+            }
+
+            function hideAllPages() {
+                document.getElementById('landing-page').classList.add('hidden');
+                document.getElementById('dashboard').classList.add('hidden');
+                document.getElementById('idea-form').classList.add('hidden');
+                document.getElementById('idea-details').classList.add('hidden');
+            }
+
+            function updateNavigation(authenticated) {
+                isAuthenticated = authenticated;
+                if (authenticated) {
+                    document.getElementById('guest-actions').classList.add('hidden');
+                    document.getElementById('user-actions').classList.remove('hidden');
+                } else {
+                    document.getElementById('guest-actions').classList.remove('hidden');
+                    document.getElementById('user-actions').classList.add('hidden');
+                }
+            }
+
+            window.logout = function() {
+                updateNavigation(false);
+                hideAllPages();
+                document.getElementById('landing-page').classList.remove('hidden');
+                currentPage = 'landing';
+                hideUserMenu();
+            }
+
+            window.toggleUserMenu = function() {
+                const menu = document.getElementById('user-menu');
+                menu.classList.toggle('hidden');
+            }
+
+            function hideUserMenu() {
+                document.getElementById('user-menu').classList.add('hidden');
+            }
+
+            // Form handling
+            window.nextStep = function() {
+                if (currentStep < 6) {
+                    document.getElementById(`step-${currentStep}`).classList.add('hidden');
+                    currentStep++;
+                    document.getElementById(`step-${currentStep}`).classList.remove('hidden');
+                    updateStepUI();
+                }
+            }
+
+            window.previousStep = function() {
+                if (currentStep > 1) {
+                    document.getElementById(`step-${currentStep}`).classList.add('hidden');
+                    currentStep--;
+                    document.getElementById(`step-${currentStep}`).classList.remove('hidden');
+                    updateStepUI();
+                }
+            }
+
+            function updateStepUI() {
+                // Update progress bar
+                const progressPercent = (currentStep / 6) * 100;
+                document.getElementById('progress-bar').style.width = `${progressPercent}%`;
+                
+                // Update step counter
+                document.getElementById('current-step').textContent = currentStep;
+                
+                // Update step title
+                const stepTitles = [
+                    'Problem Definition',
+                    'Solution Overview', 
+                    'Target Market',
+                    'Team Information',
+                    'Business Model',
+                    'Competition Analysis'
+                ];
+                document.getElementById('step-title').textContent = stepTitles[currentStep - 1];
+                
+                // Update navigation buttons
+                const prevBtn = document.getElementById('prev-btn');
+                const nextBtn = document.getElementById('next-btn');
+                const submitBtn = document.getElementById('submit-btn');
+                
+                if (currentStep === 1) {
+                    prevBtn.classList.add('hidden');
+                } else {
+                    prevBtn.classList.remove('hidden');
+                }
+                
+                if (currentStep === 6) {
+                    nextBtn.classList.add('hidden');
+                    submitBtn.classList.remove('hidden');
+                } else {
+                    nextBtn.classList.remove('hidden');
+                    submitBtn.classList.add('hidden');
+                }
+            }
+
+            function resetForm() {
+                currentStep = 1;
+                // Hide all steps except first
+                for (let i = 2; i <= 6; i++) {
+                    document.getElementById(`step-${i}`).classList.add('hidden');
+                }
+                document.getElementById('step-1').classList.remove('hidden');
+                updateStepUI();
+            }
+
+            // Mock authentication
+            document.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const form = e.target;
+                
+                if (form.querySelector('#email')) {
+                    // Login form
+                    setTimeout(() => {
+                        hideAuth();
+                        showDashboard();
+                    }, 500);
+                } else if (form.querySelector('#reg-email')) {
+                    // Register form
+                    setTimeout(() => {
+                        hideAuth();
+                        showDashboard();
+                    }, 500);
+                } else {
+                    // Idea submission form
+                    // TODO: Implement idea submission logic
+                    setTimeout(() => {
+                        showDashboard();
+                    }, 1000);
+                }
+            });
+
+            // Close user menu when clicking outside
+            document.addEventListener('click', function(e) {
+                const userMenu = document.getElementById('user-menu');
+                const userMenuButton = e.target.closest('[onclick="toggleUserMenu()"]');
+                
+                if (!userMenuButton && !userMenu.contains(e.target)) {
+                    hideUserMenu();
+                }
+            });
+
+            // Close auth overlay when clicking outside
+            document.addEventListener('click', function(e) {
+                const overlay = document.getElementById('auth-overlay');
+                const modal = overlay.querySelector('.bg-white');
+                
+                if (e.target === overlay) {
+                    hideAuth();
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
